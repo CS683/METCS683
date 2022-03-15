@@ -43,15 +43,21 @@ class MainActivity : AppCompatActivity() {
     // This function returns a message providing the game details.
     // Each game has 6 rounds. In each round, both player throw a dice.
     // The winner gets 1 point
-    fun playDice():String  {
-
-        var message=""
+    fun playDice():String {
+        var message = ""
 
         // put your code here
+        repeat(5) {
+            var diceNum1 = (1..6).random()
+            var diceNum2 = (1..6).random()
 
-        
-
-
+            message += "${player1.id}: $diceNum1, ${player2.id}: $diceNum2 "
+            message += when {
+                diceNum1 > diceNum2 -> "${player1.apply { player1.win() }.id} win\n"
+                diceNum1 < diceNum2 -> "${player2.apply { player2.win() }.id} win\n"
+                else -> "tie\n"
+            }
+    }
 
         return message
     }

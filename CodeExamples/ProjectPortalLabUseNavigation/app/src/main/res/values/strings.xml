@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ProjectPortal</string>
+    <string name="project_title">Project Title</string>
+    <string name="project_description">Project Description</string>
+</resources>
