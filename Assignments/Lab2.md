@@ -1,8 +1,8 @@
 # Lab2
 ## Description
 
-In this lab, we wiill need to make the following changes based on the Projectportal example code. 
-You can choose to use either just activities, or fragments or activities/fragments/navigation: https://github.com/CS683/METCS683/tree/main/CodeExamples
+In this lab, we wiill need to make the following changes based on the Projectportal example code: https://github.com/CS683/METCS683/tree/main/CodeExamples. 
+You can choose to use either just activities or fragments, preferrably fragments. 
 - Modify the Project data class. Besides the project title and summary, we also want to know other information about the project such as:
   - Authors of the project
   - Project links: (e.g. youtube links, github links, etc)
