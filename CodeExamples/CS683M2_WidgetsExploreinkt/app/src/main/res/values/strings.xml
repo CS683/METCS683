@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">WidgetsExplore</string>
+    <string name="title_activity_frame_layout">FrameLayout</string>
+    <string name="profile">Profile</string>
+    <string name="name">Name</string>
+    <string name="country">Country</string>
+    <string name="_18_years_or_old">18 years or old</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="made_to_public">Made to Public</string>
+    <string name="comments">Comments</string>
+    <string name="submit">submit</string>
+    <string name="your_info">Your info</string>
+    <string name="yourinfosummary">
+        Here is your information:\n
+        %1$s in %2$s\n
+        %3$s (%4$s)\n
+        Your info is made %5$s\n
+        Your comments: %6$s</string>
+    <string-array name="country_array">
+        <item>US</item>
+        <item>China</item>
+        <item>India</item>
+        <item>Japan</item>
+        <item>England</item>
+        <item>France</item>
+    </string-array>
+</resources>
