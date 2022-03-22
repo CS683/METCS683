@@ -47,8 +47,7 @@ class MainActivity : AppCompatActivity() {
             R.id.radioButtonId_male -> "male"
             else -> "unknown"
         }
-
-        // get isPublic from the Switch
+         // get isPublic from the Switch
         val isPublic = isPublicSw.isChecked
         val isPublicStr= if (isPublic) "public" else "private"
 
