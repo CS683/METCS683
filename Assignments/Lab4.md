@@ -1,7 +1,7 @@
 # Lab4
 ## Objectives
 - Learn how to use room database and repository
-- Learn how to use share preferences
+- Learn how to use shared preferences
 ## Setup
 Download the example zip files from the discussion forum the "Module 3 Lecture Notes and Examples" thread. Unzip them and run them in your Android studio. To complete lab4, you will need to particuarly use files in the datalayer and videmodel package.  
 ## Description
