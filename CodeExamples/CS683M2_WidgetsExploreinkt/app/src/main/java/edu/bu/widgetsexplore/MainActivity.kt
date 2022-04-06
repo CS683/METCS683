@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
         commentsET = findViewById(R.id.editTextId_comments)
 
         // set the submit button event listener
-       findViewById<Button>(R.id.buttonId_submit)?.setOnClickListener { submitInfo() }
+       findViewById<Button>(R.id.buttonId_submit)!!.setOnClickListener {
+           submitInfo() }
     }
 
     @SuppressLint("StringFormatInvalid")
