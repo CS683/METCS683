@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.20462962962962963" />
+        <entry key="app/src/main/res/layout/content_slidepane.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_proj_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/main_activity_slidepane.xml" value="0.15364583333333334" />
+        <entry key="app/src/main/res/menu/main_menu.xml" value="0.15364583333333334" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

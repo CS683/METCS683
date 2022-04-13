@@ -18,7 +18,8 @@
         <androidx.fragment.app.FragmentContainerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="edu.bu.projectportal.fragments.ProjListRecyclerViewFragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:navGraph="@navigation/list_graph"
             android:id="@+id/list_fragment" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

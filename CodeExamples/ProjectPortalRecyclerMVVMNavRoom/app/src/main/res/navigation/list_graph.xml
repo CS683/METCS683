@@ -12,6 +12,18 @@
             android:name="large-screen"
             app:argType="boolean"
             android:defaultValue="true"/>
-        </fragment>
+        <action
+            android:id="@+id/action_projListRecycleViewFragment_to_githubProjListFragment"
+            app:destination="@id/githubProjListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/githubProjListFragment"
+        android:name="edu.bu.projectportal.fragments.GithubProjListFragment"
+        android:label="GithubProjListFragment" >
+        <action
+            android:id="@+id/action_githubProjListFragment_pop"
+            app:popUpTo="@id/githubProjListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

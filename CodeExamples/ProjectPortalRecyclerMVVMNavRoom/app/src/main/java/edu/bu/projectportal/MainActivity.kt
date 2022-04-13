@@ -1,8 +1,14 @@
 package edu.bu.projectportal
 
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
-import android.os.Environment
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,15 +17,21 @@ import androidx.navigation.findNavController
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import edu.bu.projectportal.adapter.MyProjListRecyclerViewAdapter
+import edu.bu.projectportal.broadcastreceiver.MyBroadcastReciever
 import edu.bu.projectportal.datalayer.Project
 import java.util.*
 
-class MainActivity : AppCompatActivity(), MyProjListRecyclerViewAdapter.OnProjectClickListener {
+class MainActivity: AppCompatActivity(), MyProjListRecyclerViewAdapter.OnProjectClickListener {
+
+
+    private lateinit var accessTime:String
+    private lateinit var br: MyBroadcastReciever
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.content_slidepane)
+        setContentView(R.layout.main_activity_slidepane)
 
-        val accessTime =  loadAccessTime()
+        accessTime =  loadAccessTime()
         Toast.makeText(this, accessTime, Toast.LENGTH_LONG).show()
         saveAccessTime()
 
@@ -32,9 +44,19 @@ class MainActivity : AppCompatActivity(), MyProjListRecyclerViewAdapter.OnProjec
                 findViewById<SlidingPaneLayout>(R.id.slidepane).open()
             }
         }
+
+        br= MyBroadcastReciever()
+        registerReceiver(br,
+            IntentFilter().apply{
+                addAction(Intent.ACTION_BATTERY_CHANGED)
+            })
+
     }
 
-
+    override fun onDestroy(){
+        super.onDestroy()
+        unregisterReceiver(br)
+    }
 
     override fun onBackPressed() {
         findViewById<SlidingPaneLayout>(R.id.slidepane).close()
@@ -73,6 +95,65 @@ class MainActivity : AppCompatActivity(), MyProjListRecyclerViewAdapter.OnProjec
     }
 
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+           R.id.githubprojs -> {
+               val navController = findViewById<FragmentContainerView>(R.id.list_fragment)
+                   ?.findNavController()
+
+               if (navController?.currentDestination?.id == R.id.projListRecycleViewFragment) {
+                   navController.navigate(R.id.action_projListRecycleViewFragment_to_githubProjListFragment)
+                   findViewById<FloatingActionButton>(R.id.fab).setVisibility(GONE)
+                }
+
+
+               true
+           }
+
+            R.id.projs -> {
+                val navController = findViewById<FragmentContainerView>(R.id.list_fragment)
+                    ?.findNavController()
+
+                if (navController?.currentDestination?.id == R.id.githubProjListFragment) {
+                    navController.navigate(R.id.action_githubProjListFragment_pop)
+                    findViewById<FloatingActionButton>(R.id.fab).setVisibility(VISIBLE)
+                }
+                true
+            }
+
+            R.id.setting -> {
+                Toast.makeText(this, accessTime, Toast.LENGTH_LONG).show()
+                true
+            }
+            R.id.help -> {
+
+                true
+            }
+            R.id.signout -> {
+                val logoutIntent =
+                    Intent(this, LoginActivity::class.java).apply{
+                        putExtra("Logout", true)
+                    }
+                startActivity(logoutIntent)
+
+                 Toast.makeText(
+                    applicationContext,
+                    "Bye!",
+                    Toast.LENGTH_LONG
+                ).show()
+
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
 
 }

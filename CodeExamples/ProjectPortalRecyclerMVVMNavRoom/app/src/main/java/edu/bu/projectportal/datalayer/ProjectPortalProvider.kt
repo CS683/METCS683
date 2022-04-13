@@ -1,15 +1,16 @@
-package edu.bu.projectportal
+package edu.bu.projectportal.datalayer
 
 import android.content.ContentProvider
 import android.content.ContentValues
 import android.content.UriMatcher
 import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.room.Room
-import edu.bu.projectportal.datalayer.Project
-import edu.bu.projectportal.datalayer.ProjectDao
-import edu.bu.projectportal.datalayer.ProjectPortalDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ProjectPortalProvider: ContentProvider() {
     // Defines a handle to the Room database
@@ -22,7 +23,8 @@ class ProjectPortalProvider: ContentProvider() {
         appDatabase = context?.let {
             Room.databaseBuilder(
                 it,
-                ProjectPortalDatabase::class.java, DBNAME).build()
+                ProjectPortalDatabase::class.java, DBNAME
+            ).build()
         }!!
 
         // Gets a Data Access Object to perform the database operations
@@ -56,7 +58,9 @@ class ProjectPortalProvider: ContentProvider() {
             PROJECT -> {
                 // call corresponding db insert method
                 values?.let {
+                    CoroutineScope(Dispatchers.IO).launch{
                     id = projectDao!!.addProject(constructProject(values))
+                    }
                 }
             }
             else -> throw IllegalArgumentException("unknown URI: $uri")
@@ -64,7 +68,8 @@ class ProjectPortalProvider: ContentProvider() {
         if (id >= 0) {
             context!!.contentResolver.notifyChange(uri, null)
         }
-        return Uri.parse(TABLE_NAME.toString() + "/" + id
+        return Uri.parse(
+            TABLE_NAME.toString() + "/" + id
         )
 
     }

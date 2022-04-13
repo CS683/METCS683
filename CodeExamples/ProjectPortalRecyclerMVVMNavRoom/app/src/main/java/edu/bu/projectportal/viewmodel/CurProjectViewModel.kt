@@ -4,8 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import edu.bu.projectportal.datalayer.Project
 import edu.bu.projectportal.ProjectPortalApplication
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 /*
 Create a ViewModel class to keep track of Current Project
@@ -37,9 +40,9 @@ class CurProjectViewModel(application: Application): AndroidViewModel(applicatio
             this.title = title
             this.description = desp
         }
-
-        projectPortalRepository.editProject(_curProject.value!!)
-
+        viewModelScope.launch(Dispatchers.IO) {
+            projectPortalRepository.editProject(_curProject.value!!)
+        }
     }
 
 

@@ -4,9 +4,13 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import edu.bu.projectportal.datalayer.Project
 import edu.bu.projectportal.ProjectPortalApplication
 import edu.bu.projectportal.datalayer.ProjectDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 /*
 Create a ViewModel class to keep track of the Project list
@@ -23,6 +27,7 @@ class ProjectListViewModel(application: Application): AndroidViewModel(applicati
 
     private val _projectList: LiveData<List<Project>>
     = projectPortalRepository.getAllProjects()
+
     val projectList:LiveData<List<Project>>
         get() = _projectList
 
@@ -31,11 +36,23 @@ class ProjectListViewModel(application: Application): AndroidViewModel(applicati
     }
 
     fun addProject(project: Project) {
-        projectPortalRepository.addProject(project)
+        viewModelScope.launch(Dispatchers.IO) {
+            projectPortalRepository.addProject(project)
+        }
     }
 
     fun delProject(project: Project) {
-        projectPortalRepository.delProject(project)
+        viewModelScope.launch(Dispatchers.IO) {
+
+            projectPortalRepository.delProject(project)
+        }
     }
+
+
+
+//    fun loadGithubProjects(): LiveData<List<Project>>  {
+//       return projectPortalRepository.loadGithubProjects()
+//
+//    }
 
 }

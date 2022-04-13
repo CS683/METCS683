@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.bu.projectportal">
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,7 @@
         android:theme="@style/Theme.ProjectPortal">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,14 +22,22 @@
             </intent-filter>
         </activity>
 
-
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"/>
         <provider
-            android:name=".ProjectPortalProvider"
-            android:authorities="edu.bu.projectportal.ProjectPortalProvider"
+            android:name=".datalayer.ProjectPortalProvider"
+            android:authorities="edu.bu.projectportal.datalayer.ProjectPortalProvider"
             android:exported= "true"
             android:permission="edu.bu.projectportal.read">
         </provider>
 
-    </application>
+<!--        <receiver android:name=".broadcastreceiver.MyBroadcastReciever"-->
+<!--            android:exported= "true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.BATTERY_CHANGED" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
+  </application>
 
 </manifest>

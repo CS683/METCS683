@@ -114,6 +114,7 @@ class ProjListRecyclerViewFragment : Fragment() {
                 myAdapter.notifyDataSetChanged()
             })
 
+
             ItemTouchHelper(SwipeToDeleteCallback()).attachToRecyclerView(this)
 
         }

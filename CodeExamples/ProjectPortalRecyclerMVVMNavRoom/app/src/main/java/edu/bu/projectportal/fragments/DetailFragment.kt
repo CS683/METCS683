@@ -45,8 +45,4 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             navigate(R.id.action_detailFragment_to_editFragment)
         }
     }
-
-
-
-
 }

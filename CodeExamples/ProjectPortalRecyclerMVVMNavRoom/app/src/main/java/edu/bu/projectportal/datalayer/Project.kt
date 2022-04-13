@@ -12,10 +12,12 @@ User @Entity annotation
 @Entity(tableName="projects")
 data class Project(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    var title: String,
+    val id: Int = 0,
+    var title: String = "",
     @ColumnInfo(name="desc")
-    var description: String)
+    var description: String = ""){
+    var docId:String = ""
+}
 //{
 //    companion object {
 //         // val project = Project(0, "Weather Forecast", "Weather Forcast is an app ...")

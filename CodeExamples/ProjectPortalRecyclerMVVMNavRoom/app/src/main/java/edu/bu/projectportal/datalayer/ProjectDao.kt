@@ -9,13 +9,13 @@ to access the projects table in the database
 @Dao
 interface ProjectDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addProject(project: Project):Long
+    suspend fun addProject(project: Project):Long
 
     @Delete
-    fun delProject(project: Project)
+    suspend fun delProject(project: Project)
 
     @Update
-    fun editProject(project: Project)
+    suspend fun editProject(project: Project)
 
     @Query("SELECT count(*) From projects")
     fun count(): LiveData<Int>
