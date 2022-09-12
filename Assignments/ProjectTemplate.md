@@ -65,7 +65,7 @@ This section is not needed for iteration 0. In later iterations, you shall highl
 
 *(Please provide  a summary of the requirements implemented and Android/third party components used in the past and current iterations, and the plan in the future iteration.)*
 
-|Iteration | Application Requirements (Eseential/Desirable/Optional) | Android Components and Features| member 1 contribution/tasks| member 3 contribution/tasks|
+|Iteration | Application Requirements (Eseential/Desirable/Optional) | Android Components and Features| member 1 contribution/tasks| member 2 contribution/tasks|
 |---|---|---|---|---|
 |1| | | | |
 |2| | | | |
