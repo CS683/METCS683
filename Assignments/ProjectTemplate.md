@@ -16,7 +16,7 @@
 
 ## Related Work
 
-*(This section should clearly describe all features/requirements that you plan to implement or have implemented for your application. You should separate them into three categories: essential, desirable and optional.
+*(This section should describe some similar apps and the similarities or differences between yours and other applications.
 )*
 
 ## Requirement Analysis and Testing 
