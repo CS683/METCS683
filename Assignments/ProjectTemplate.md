@@ -16,7 +16,7 @@
 
 ## Related Work
 
-*(This section should clearly describe all features/requirements that you plan to implement or have implemented for your application. You should separate them into three categories: essential, desirable and optional.
+*(This section should describe some similar apps and the similarities or differences between yours and other applications.
 )*
 
 ## Requirement Analysis and Testing 
@@ -65,13 +65,12 @@ This section is not needed for iteration 0. In later iterations, you shall highl
 
 *(Please provide  a summary of the requirements implemented and Android/third party components used in the past and current iterations, and the plan in the future iteration.)*
 
-|Iteration | Application Requirements (Eseential/Desirable/Optional) | Android Components and Features| 
-|---|---|---|
-|1| | |
-|2| | |
-|3| | |
-|4| | |
-|5| | |
+|Iteration | Application Requirements (Eseential/Desirable/Optional) | Android Components and Features| member 1 contribution/tasks| member 2 contribution/tasks|
+|---|---|---|---|---|
+|1| | | | |
+|2| | | | |
+|3| | | | |
+
 
 ## Future Work (Optional)
 *(This section can describe possible future works. Particularly the requirements you planned but didn’t get time to implement, and possible Android components or features to implement them. 
