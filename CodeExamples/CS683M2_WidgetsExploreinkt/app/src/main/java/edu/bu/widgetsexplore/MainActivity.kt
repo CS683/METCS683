@@ -1,10 +1,14 @@
 package edu.bu.widgetsexplore
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+
 
 class MainActivity : AppCompatActivity() {
     // use lateinit to initialize them later
@@ -32,6 +36,20 @@ class MainActivity : AppCompatActivity() {
         // set the submit button event listener
        findViewById<Button>(R.id.buttonId_submit)!!.setOnClickListener {
            submitInfo() }
+
+        nameET.setOnFocusChangeListener{v, hasFocus->
+           closeKeyboard(v, hasFocus) }
+        commentsET.setOnFocusChangeListener{v, hasFocus->
+            closeKeyboard(v, hasFocus) }
+
+    }
+
+    private fun closeKeyboard(v: View?, hasFocus: Boolean) {
+        if (!hasFocus) {
+            val imm: InputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(v?.windowToken, 0)
+        }
     }
 
     @SuppressLint("StringFormatInvalid")
@@ -68,6 +86,7 @@ class MainActivity : AppCompatActivity() {
         clearData()
 
     }
+
     private fun clearData() {
         nameET.text?.clear()
         countrySp.id = 0
