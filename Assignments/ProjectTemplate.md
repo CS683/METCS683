@@ -63,7 +63,7 @@ This section is not needed for iteration 0. In later iterations, you shall highl
     
 ## Timeline
 
-*(Please provide  a summary of the requirements implemented and Android/third party components used in the past and current iterations, and the plan in the future iteration.)*
+*(Please provide  a summary of the requirements implemented and Android/third party components used in the past and current iterations, and the plan in the future iteration. This is needed for every iteration including iteration 0. In your iteration 0, you will give a plan for all future iterations. In your iterations, you will update it according to your progress.  )*
 
 |Iteration | Application Requirements (Eseential/Desirable/Optional) | Android Components and Features| member 1 contribution/tasks| member 2 contribution/tasks|
 |---|---|---|---|---|
