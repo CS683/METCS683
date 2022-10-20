@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/listnav_graph"
+    app:startDestination="@id/projListRecycleViewFragment">
+
+    <fragment
+        android:id="@+id/projListRecycleViewFragment"
+        android:name="edu.bu.projectportal.fragments.ProjListRecyclerViewFragment"
+        android:label="ProjListRecycleViewFragment" >
+        <argument
+            android:name="large-screen"
+            app:argType="boolean"
+            android:defaultValue="false"/>
+        <action
+            android:id="@+id/action_projListRecycleViewFragment_to_nav_graph"
+            app:destination="@id/nav_graph" />
+    </fragment>
+    <include app:graph="@navigation/nav_graph" />
+
+</navigation>
