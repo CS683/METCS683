@@ -3,7 +3,7 @@
 - Learn how to use recyler view to display a collection of data
 - Learn how to use navigation destination arguments OR view models for fragment communication. 
 ## Setup
-Download two example code from the discussion forum the "Module 3 Lecture Notes and Examples" thread. Unzip them and run them in your Android studio. To complete lab3, you can use one of the example code. For simiplicity, you can just use the first example: ProjectportalRecycler.zip. If you also want to learn how to use ViewModel, you can use the second example. 
+Download two example code from the blackboard. Unzip them and run them in your Android studio. To complete lab3, you can refer to any one of the example code. For simiplicity, you can just use the first example: ProjectportalRecycler.zip. If you also want to learn how to use ViewModel, you can use the second example. 
 1. ProjectPortalRecycler.zip: this one only implements recycler view and navigation with argumented destination. You can use the code in this zip file for your lab3. In particular, you can copy all files related to recyclerview (e.g.  ProjListRecycleViewFragment.kt and MyProjListRecyclerViewAdapter.kt, fragment_proj_list_recycler_view.xml and fragment_projitem.xml) into your lab2 folder, and modify your existing code (such as edit fragment, detail fragment, and navigtation graph) based on the example code. 
 2. ProjectPortalRecyclerMVVMTest.zip: this one is much more complicated. It implements not only recyclerview implementation, but also the viewmodel, livedata and adaption to different screen size, as well as espresso test. For your lab3, you can copy all files related to recyclerview and view model in the example code to your lab2 folder and then modify your existing code based on the example code. 
  
