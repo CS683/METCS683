@@ -18,5 +18,5 @@ Based on either one of the two examples mentioned above, add the following featu
   - On the AddProject screen, you can use a submit button. When it is clicked, the new project should be added into the project list, and it will switch back to the ProjectList screen with the new added project displayed. (this is an optional feature. )
 
 ## What to submit:
-- A lab report including the explanation of your design and implementaion, and the screenshots for testing results.
+- A lab report including the explanation of your design and implementaion, and the screenshots for testing results. Please include your github repo URL link in the report and also make sure to commit your code to github. 
 - A zip file of your source code
