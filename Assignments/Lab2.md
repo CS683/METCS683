@@ -18,7 +18,10 @@ The boolean parameter isChecked shows the new checked state of the button, which
 Check https://developer.android.com/reference/android/widget/CompoundButton.OnCheckedChangeListener for more details.
 
 ## What to submit: 
-- A lab report in pdf or doc or md, including
-  - Your github link,
-  - a brief description of how you designed and implemented the above requirements. Please also report any issues you have encountered and the screenshots to show the execution result
-- A zip file of your source code
+- On blackboard
+  - A lab report fie in pdf or doc, including 
+   - your github repo URL link
+   - a description of how you designed and implemented the above requirements. Please also report any issues you have encountered and the screenshots to show the execution result.
+  - A zip file of your source code
+- On github
+  - Commit both your lab report (in pdf, doc or md) and code
