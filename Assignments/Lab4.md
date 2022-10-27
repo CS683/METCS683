@@ -14,6 +14,11 @@ Based on the example we discuss in this module, add the following features into 
  - Add a "show favorite projects only" checkbox (or toggle button or switch) on the project list screen.
  - This setting (whether it will show only favorite projects) should be stored into and received from the shared preferences so that it can be remembered across different sessions.
  - If it is set, only list all favorite projects from the database. (this is a little bit harder and is optional. To implement this one, you need to change the observer onChanged() call back when observing the project list.)
-## What to submit
-- A lab report including the explanation of your design and implementaion, and the screenshots for testing results.
-- A zip file of your source code
+## What to submit: 
+- On blackboard
+  - A lab report fie in pdf or doc, including 
+   - your github repo URL link
+   - a description of how you designed and implemented the above requirements. Please also report any issues you have encountered and the screenshots to show the execution result.
+  - A zip file of your source code
+- On github
+  - Commit both your lab report (in pdf, doc or md) and code
