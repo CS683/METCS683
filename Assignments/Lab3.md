@@ -17,6 +17,12 @@ Based on either one of the two examples mentioned above, add the following featu
   - Connect the AddProject Screen to the Project. For example, add a "+" Button in the Project List Screen, when clicking on it, it goes to the AddProject screen. If you implement it using Activity, you can use a simple intent to switch to the AddProject screen. If you implement it using Fragment, you can add that into the navigation graph. 
   - On the AddProject screen, you can use a submit button. When it is clicked, the new project should be added into the project list, and it will switch back to the ProjectList screen with the new added project displayed. (this is an optional feature. )
 
-## What to submit:
-- A lab report including the explanation of your design and implementaion, and the screenshots for testing results. Please include your github repo URL link in the report and also make sure to commit your code to github. 
-- A zip file of your source code
+## What to submit: 
+- On blackboard
+  - A lab report fie in pdf or doc, including 
+   - your github repo URL link
+   - a description of how you designed and implemented the above requirements. Please also report any issues you have encountered and the screenshots to show the execution result.
+  - A zip file of your source code
+- On github
+  - Commit both your lab report (in pdf, doc or md) and code
+
