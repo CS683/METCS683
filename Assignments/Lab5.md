@@ -1,6 +1,11 @@
 # Lab 5
 ## Description
 Based on your lab4 and the example we discuss in the class, implement the database operations in the Android coroutine. 
-## What to submit:
-A lab report including the explanation of your design and implementaion, and the screenshots for testing results.
-A zip file of your source code
+## What to submit: 
+- On blackboard
+  - A lab report fie in pdf or doc, including 
+   - your github repo URL link
+   - a description of how you designed and implemented the above requirements. Please also report any issues you have encountered and the screenshots to show the execution result.
+  - A zip file of your source code
+- On github
+  - Commit both your lab report (in pdf, doc or md) and code
