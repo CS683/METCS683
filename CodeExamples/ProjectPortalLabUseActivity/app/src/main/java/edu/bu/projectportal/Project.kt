@@ -2,7 +2,7 @@ package edu.bu.projectportal
 
 data class Project(val id: Int, var title: String, var description: String){
     companion object {
-        var project = Project(0, "Weather Forecast", "Weather Forcast is an app ...")
+        val project = Project(0, "Weather Forecast", "Weather Forcast is an app ...")
     }
 
 //        var projects = listOf(

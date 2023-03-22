@@ -16,20 +16,9 @@ class DetailFragment : Fragment() {
     private lateinit var projDesc:TextView
     private lateinit var editProj: ImageButton
 
-   // private lateinit var editProjListener: EditProjectListener
-
     companion object {
         fun newInstance() = DetailFragment()
     }
-
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        if (context is EditProjectListener) {
-//            editProjListener = context
-//        } else {
-//            throw RuntimeException("Must implement EditProjectListener")
-//        }
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +43,6 @@ class DetailFragment : Fragment() {
                 replace<EditFragment>(R.id.container)
                 addToBackStack("detail")
             }
-          // editProjListener.editProj()
         }
     }
 

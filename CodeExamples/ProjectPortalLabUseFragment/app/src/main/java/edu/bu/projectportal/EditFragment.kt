@@ -16,20 +16,9 @@ class EditFragment : Fragment() {
     private lateinit var submit:Button
     private lateinit var cancel:Button
 
-   // private lateinit var editProjListener: EditProjectListener
-
     companion object {
         fun newInstance() = EditFragment()
     }
-
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        if (context is EditProjectListener) {
-//            editProjListener = context
-//        } else {
-//            throw RuntimeException("Must implement EditProjectListener")
-//        }
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

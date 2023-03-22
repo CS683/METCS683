@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var genderRG:RadioGroup
     private lateinit var isPublicSw:SwitchCompat
     private lateinit var commentsET:EditText
+    private lateinit var summaryTV: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         isAdultCb = findViewById(R.id.checkBoxId_age)
         isPublicSw = findViewById(R.id.switchId_public)
         commentsET = findViewById(R.id.editTextId_comments)
+        summaryTV = findViewById(R.id.textViewId_info)
 
         // set the submit button event listener
        findViewById<Button>(R.id.buttonId_submit)!!.setOnClickListener {
@@ -75,14 +77,15 @@ class MainActivity : AppCompatActivity() {
 
         // compose a message from the above information
         if (name.isNotEmpty()) {
-            findViewById<TextView>(R.id.textViewId_info).text =
+            summaryTV.text =
                 getString(R.string.yourinfosummary, name, country, gender,
                     isAdultStr, isPublicStr, comments)
             // display a toast message
             Toast.makeText(this, "Submit successfully!", Toast.LENGTH_LONG).show()
-        } else
+        } else {
             Toast.makeText(this, "Please input your name!", Toast.LENGTH_LONG).show()
-
+            summaryTV.text = ""
+        }
         clearData()
 
     }

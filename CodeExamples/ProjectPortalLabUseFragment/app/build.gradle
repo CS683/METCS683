@@ -5,12 +5,12 @@ plugins {
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdk 30
+    compileSdk 33
 
     defaultConfig {
         applicationId "edu.bu.projectportal"
         minSdk 21
-        targetSdk 30
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -33,6 +33,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'edu.bu.projectportal'
 }
 
 dependencies {
@@ -49,9 +50,5 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-}
-repositories {
-    mavenCentral()
 }
