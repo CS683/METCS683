@@ -21,7 +21,7 @@ Check https://developer.android.com/reference/android/widget/CompoundButton.OnCh
 - On blackboard
   - A lab report fie in pdf or doc, including 
    - your github repo URL link
-   - a description of how you designed and implemented the above requirements. Please also report any issues you have encountered and the screenshots to show the execution result.
+   - a description of how you designed and implemented the above requirements. Please also report any issues you have encountered and the screenshots to show the execution result. *Please specify what device or virtual device you used to execute your program. *
   - A zip file of your source code
 - On github
   - Commit both your lab report (in pdf, doc or md) and code
