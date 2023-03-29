@@ -1,6 +1,8 @@
 package edu.bu.projectportal.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +12,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import edu.bu.projectportal.adapter.MyProjListRecyclerViewAdapter
 import edu.bu.projectportal.Project
 import edu.bu.projectportal.R
@@ -27,6 +30,20 @@ class ProjListRecyclerViewFragment : Fragment() {
     private var columnCount = 1
     private var largeScreen = false
 
+    private lateinit var onProjectClickListener: OnProjectClickListener
+
+    interface OnProjectClickListener{
+        fun onProjectClick(proj:Project)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnProjectClickListener) {
+            onProjectClickListener = context
+        } else {
+            throw RuntimeException("Must implement OnProjectClickListener")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,11 +51,13 @@ class ProjListRecyclerViewFragment : Fragment() {
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
+        // This is not needed when using slidepane
         arguments?.let {
             largeScreen = it.getBoolean(ARG_LARGE_SCREEN)
         }
-
     }
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -50,10 +69,12 @@ class ProjListRecyclerViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val isFragAlone = (id== R.id.main)
-         //  requireActivity()
+         // this view model is shared among all fragments,
+        // so the owner needs to be activity.
+        // use requireActivity() to get the activity containing this fragment
         val viewModel =
             ViewModelProvider(requireActivity()).get(CurProjectViewModel::class.java)
+        // this view model is only for this fragment, so owner is just "this"
         val listViewModel =
             ViewModelProvider(this).get(ProjectListViewModel::class.java)
 //        val viewModel:CurProjectViewModel by activityViewModels()
@@ -67,18 +88,19 @@ class ProjListRecyclerViewFragment : Fragment() {
             }
 
              val myAdapter = MyProjListRecyclerViewAdapter(
-                listViewModel.projectList?.value ?: emptyList(),
-                object : MyProjListRecyclerViewAdapter.OnProjectClickListener {
-                    override fun onProjectClick(project: Project) {
-                        viewModel.setCurProject(project)
-//                      if (!largeScreen) {
-//                            view.findNavController().navigate(
-//                                R.id.action_projListRecycleViewFragment_to_nav_graph
-//                            )
-//                       }
+                listViewModel.projectList?.value ?: emptyList())
+                 { project ->
+                     viewModel.setCurProject(project)
+                     // this is only used when using sliding pane
+         //            onProjectClickListener?.onProjectClick(project)
 
-                    }
-                })
+                     // this is only used when not using sliding pane
+                      if (!largeScreen) {
+                            view.findNavController().navigate(
+                                R.id.action_projListRecycleViewFragment_to_nav_graph
+                            )
+                       }
+                 }
 
             this.adapter = myAdapter
 

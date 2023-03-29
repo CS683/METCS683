@@ -11,13 +11,10 @@ import edu.bu.projectportal.databinding.FragmentProjItemBinding
 
 class MyProjListRecyclerViewAdapter(
     private val projects: List<Project>,
-    private val onProjectClickListener: OnProjectClickListener
+    private val onProjectClick:(Project)-> Unit
 )
     : RecyclerView.Adapter<MyProjListRecyclerViewAdapter.ViewHolder>() {
 
-    interface OnProjectClickListener {
-        fun onProjectClick(project: Project);
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -31,15 +28,10 @@ class MyProjListRecyclerViewAdapter(
         holder.idView.text = (project.id +1).toString()
         holder.contentView.text = project.title
         holder.cardView.setOnClickListener{
-//                val action = ProjListRecycleViewFragmentDirections
-//                    .actionProjListRecycleViewFragmentToDetailFragment(position)
-//                it.findNavController().navigate(action)
-
-            onProjectClickListener.onProjectClick(project)
-//            it.findNavController()?.navigate(
-//                R.id.action_projListRecycleViewFragment_to_nav_graph)
-        }
+            onProjectClick(project)
+      }
     }
+
 
     override fun getItemCount(): Int = projects.size
 

@@ -11,11 +11,10 @@
     <androidx.fragment.app.FragmentContainerView
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:id="@+id/list_fragment"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/list_graph"
-        android:layout_weight="0.4" />
+        app:navGraph="@navigation/list_graph" />
 
 
     <androidx.fragment.app.FragmentContainerView
@@ -23,8 +22,9 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.6"
+        android:layout_weight="1"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph" />
+        app:navGraph="@navigation/nav_graph"
+        />
 
 </LinearLayout>
