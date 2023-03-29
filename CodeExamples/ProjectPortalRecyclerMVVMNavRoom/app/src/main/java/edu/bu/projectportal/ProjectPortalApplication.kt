@@ -46,7 +46,7 @@ class ProjectPortalApplication: Application() {
                 .build()
 
         projectPortalRepository =
-            ProjectPortalRepository(projectportalDatabase.projectDao())
+            ProjectPortalRepository(projectportalDatabase.projectDao(),GithubAPI())
 
 //        projectPortalRepository = ProjectPortalRepository(
 //            FirebaseStorage(),

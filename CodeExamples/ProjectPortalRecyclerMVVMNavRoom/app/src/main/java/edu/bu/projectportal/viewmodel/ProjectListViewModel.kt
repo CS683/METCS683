@@ -48,11 +48,9 @@ class ProjectListViewModel(application: Application): AndroidViewModel(applicati
         }
     }
 
+    fun loadGithubProjects(): LiveData<List<Project>>  {
+       return projectPortalRepository.loadGithubProjects()
 
-
-//    fun loadGithubProjects(): LiveData<List<Project>>  {
-//       return projectPortalRepository.loadGithubProjects()
-//
-//    }
+    }
 
 }

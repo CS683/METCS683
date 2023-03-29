@@ -33,7 +33,7 @@ class GithubProjListFragment : Fragment() {
     private lateinit var myAdapter: MyProjListRecyclerViewAdapter
     private lateinit var viewModel: CurProjectViewModel
     private lateinit var listViewModel: ProjectListViewModel
-    private lateinit var onProjectClickListener: MyProjListRecyclerViewAdapter.OnProjectClickListener
+    private lateinit var onProjectClickListener: ProjListRecyclerViewFragment.OnProjectClickListener
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,10 +57,10 @@ class GithubProjListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MyProjListRecyclerViewAdapter.OnProjectClickListener) {
+        if (context is ProjListRecyclerViewFragment.OnProjectClickListener) {
             onProjectClickListener = context
         } else {
-            throw RuntimeException("Must implement EditProjectListener")
+            throw RuntimeException("Must implement onProjectClickListener")
         }
     }
 
@@ -80,23 +80,18 @@ class GithubProjListFragment : Fragment() {
                 else -> GridLayoutManager(context, columnCount)
             }
 
-            myAdapter = MyProjListRecyclerViewAdapter(
-                //      listViewModel.projectList.value ?: emptyList(),
-                object : MyProjListRecyclerViewAdapter.OnProjectClickListener {
-                    override fun onProjectClick(project: Project) {
+            myAdapter = MyProjListRecyclerViewAdapter{project->
                         viewModel.setCurProject(project)
                         // this is just for sliding pane
                         onProjectClickListener?.onProjectClick(project)
-
                     }
-                })
 
             this.adapter = myAdapter
 
-//            listViewModel.loadGithubProjects().observe(viewLifecycleOwner, Observer {
-//                myAdapter.replaceItems(it)
-//                viewModel.initCurProject(myAdapter.getProject(0))
-//            })
+            listViewModel.loadGithubProjects().observe(viewLifecycleOwner, Observer {
+                myAdapter.replaceItems(it)
+                viewModel.initCurProject(myAdapter.getProject(0))
+            })
 
             viewModel.curProject.observe(viewLifecycleOwner, Observer {
                 myAdapter.notifyDataSetChanged()

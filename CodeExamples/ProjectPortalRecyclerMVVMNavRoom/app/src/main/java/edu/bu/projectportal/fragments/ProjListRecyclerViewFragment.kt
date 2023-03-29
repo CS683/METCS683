@@ -33,9 +33,11 @@ class ProjListRecyclerViewFragment : Fragment() {
     private lateinit var myAdapter: MyProjListRecyclerViewAdapter
     private lateinit var viewModel: CurProjectViewModel
     private lateinit var listViewModel: ProjectListViewModel
-    private lateinit var onProjectClickListener: MyProjListRecyclerViewAdapter.OnProjectClickListener
+    private lateinit var onProjectClickListener: OnProjectClickListener
 
-
+    interface OnProjectClickListener{
+        fun onProjectClick(project:Project)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +60,7 @@ class ProjListRecyclerViewFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MyProjListRecyclerViewAdapter.OnProjectClickListener) {
+        if (context is ProjListRecyclerViewFragment.OnProjectClickListener) {
             onProjectClickListener = context
         } else {
             throw RuntimeException("Must implement EditProjectListener")
@@ -83,14 +85,10 @@ class ProjListRecyclerViewFragment : Fragment() {
                 else -> GridLayoutManager(context, columnCount)
             }
 
-              myAdapter = MyProjListRecyclerViewAdapter(
-          //      listViewModel.projectList.value ?: emptyList(),
-                object : MyProjListRecyclerViewAdapter.OnProjectClickListener {
-                    override fun onProjectClick(project: Project) {
+              myAdapter = MyProjListRecyclerViewAdapter{ project->
                         viewModel.setCurProject(project)
                         // this is just for sliding pane
                         onProjectClickListener?.onProjectClick(project)
-
                         // will not perform the navigation from list fragment to detail fragment
                         // on the large screen device.
 //                        if (!largeScreen) {
@@ -98,11 +96,10 @@ class ProjListRecyclerViewFragment : Fragment() {
 //                                R.id.action_projListRecycleViewFragment_to_nav_graph
 //                            )
 //                       }
-
-                    }
-                })
+                      }
 
             this.adapter = myAdapter
+
 
             listViewModel.projectList.observe(viewLifecycleOwner, Observer {
                 myAdapter.replaceItems(it)
@@ -114,12 +111,10 @@ class ProjListRecyclerViewFragment : Fragment() {
                 myAdapter.notifyDataSetChanged()
             })
 
-
             ItemTouchHelper(SwipeToDeleteCallback()).attachToRecyclerView(this)
 
         }
     }
-
 
     inner class SwipeToDeleteCallback: ItemTouchHelper.SimpleCallback(0,
         ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {

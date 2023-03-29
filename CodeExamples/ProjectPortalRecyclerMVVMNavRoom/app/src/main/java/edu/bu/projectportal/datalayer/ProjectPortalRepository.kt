@@ -8,7 +8,8 @@ import edu.bu.projectportal.firebaseutil.FirebaseStorage
 import java.util.concurrent.Executors
 
 class ProjectPortalRepository (
-    private val projectDao: ProjectDao
+    private val projectDao: ProjectDao,
+    private val githubAPI:GithubAPI
 ) {
     val executor =  Executors.newSingleThreadExecutor()
 
@@ -58,7 +59,13 @@ class ProjectPortalRepository (
     fun count(): LiveData<Int> {
         return projectDao.count()
     }
+
+    fun loadGithubProjects():LiveData<List<Project>> {
+        githubAPI.loadProjects()
+        return githubAPI.projectsLiveData
+    }
 }
+
 
 //class ProjectPortalRepository (
 //    private val firebaseStorage: FirebaseStorage,
@@ -92,8 +99,5 @@ class ProjectPortalRepository (
 //        return firebaseStorage.count
 //    }
 //
-//    fun loadGithubProjects():LiveData<List<Project>> {
-//        githubAPI.loadProjects()
-//        return githubAPI.projectsLiveData
-//    }
+//
 //}

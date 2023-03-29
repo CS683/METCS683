@@ -19,10 +19,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import edu.bu.projectportal.adapter.MyProjListRecyclerViewAdapter
 import edu.bu.projectportal.broadcastreceiver.MyBroadcastReciever
 import edu.bu.projectportal.datalayer.Project
+import edu.bu.projectportal.fragments.ProjListRecyclerViewFragment
 import java.util.*
 
-class MainActivity: AppCompatActivity(), MyProjListRecyclerViewAdapter.OnProjectClickListener {
-
+class MainActivity: AppCompatActivity(), ProjListRecyclerViewFragment.OnProjectClickListener {
 
     private lateinit var accessTime:String
     private lateinit var br: MyBroadcastReciever
@@ -30,7 +30,6 @@ class MainActivity: AppCompatActivity(), MyProjListRecyclerViewAdapter.OnProject
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity_slidepane)
-
         accessTime =  loadAccessTime()
         Toast.makeText(this, accessTime, Toast.LENGTH_LONG).show()
         saveAccessTime()
@@ -50,7 +49,6 @@ class MainActivity: AppCompatActivity(), MyProjListRecyclerViewAdapter.OnProject
             IntentFilter().apply{
                 addAction(Intent.ACTION_BATTERY_CHANGED)
             })
-
     }
 
     override fun onDestroy(){
@@ -58,15 +56,17 @@ class MainActivity: AppCompatActivity(), MyProjListRecyclerViewAdapter.OnProject
         unregisterReceiver(br)
     }
 
+    // this is only used for sliding pane
     override fun onBackPressed() {
         findViewById<SlidingPaneLayout>(R.id.slidepane).close()
         hideKeyboard()
     }
 
+    // this is only used for sliding pane
     override fun onProjectClick(project: Project){
         findViewById<SlidingPaneLayout>(R.id.slidepane).open()
     }
-
+    // this is only used for sliding pane
     private fun hideKeyboard() {
         // Check if no view has focus:
         val view = currentFocus
@@ -81,12 +81,14 @@ class MainActivity: AppCompatActivity(), MyProjListRecyclerViewAdapter.OnProject
     }
 
 
+    // this is an example of reading data from shared preferences
     fun loadAccessTime():String {
         // get the last access time from the shared preferences. The file name is accesstime.xml
         return getSharedPreferences(getString(R.string.access_time),
             Context.MODE_PRIVATE).getString(getString(R.string.last_access_time),
             getString(R.string.first_time_access))?:""
     }
+    // this is an example of writing data to shared preferences
     fun saveAccessTime(){
         // get current time and write to the shared preferences file
         val curTime: String = Date().toString()
@@ -109,11 +111,9 @@ class MainActivity: AppCompatActivity(), MyProjListRecyclerViewAdapter.OnProject
                    ?.findNavController()
 
                if (navController?.currentDestination?.id == R.id.projListRecycleViewFragment) {
-                   navController.navigate(R.id.action_projListRecycleViewFragment_to_githubProjListFragment)
+                  navController.navigate(R.id.action_projListRecycleViewFragment_to_githubProjListFragment)
                    findViewById<FloatingActionButton>(R.id.fab).setVisibility(GONE)
                 }
-
-
                true
            }
 
@@ -132,10 +132,7 @@ class MainActivity: AppCompatActivity(), MyProjListRecyclerViewAdapter.OnProject
                 Toast.makeText(this, accessTime, Toast.LENGTH_LONG).show()
                 true
             }
-            R.id.help -> {
 
-                true
-            }
             R.id.signout -> {
                 val logoutIntent =
                     Intent(this, LoginActivity::class.java).apply{
