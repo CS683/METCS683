@@ -2,20 +2,19 @@ package edu.bu.projectportal.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import edu.bu.projectportal.adapter.MyProjListRecyclerViewAdapter
-import edu.bu.projectportal.Project
+import edu.bu.projectportal.datalayer.Project
 import edu.bu.projectportal.R
 import edu.bu.projectportal.databinding.FragmentProjListRecyclerViewBinding
 import edu.bu.projectportal.viewmodel.CurProjectViewModel
@@ -31,19 +30,13 @@ class ProjListRecyclerViewFragment : Fragment() {
     private var columnCount = 1
     private var largeScreen = false
 
+    private lateinit var myAdapter: MyProjListRecyclerViewAdapter
+    private lateinit var viewModel: CurProjectViewModel
+    private lateinit var listViewModel: ProjectListViewModel
     private lateinit var onProjectClickListener: OnProjectClickListener
 
     interface OnProjectClickListener{
-        fun onProjectClick(proj:Project)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnProjectClickListener) {
-            onProjectClickListener = context
-        } else {
-            throw RuntimeException("Must implement OnProjectClickListener")
-        }
+        fun onProjectClick(project:Project)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,13 +45,11 @@ class ProjListRecyclerViewFragment : Fragment() {
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
-        // This is not needed when using slidepane
         arguments?.let {
             largeScreen = it.getBoolean(ARG_LARGE_SCREEN)
         }
+
     }
-
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -67,18 +58,24 @@ class ProjListRecyclerViewFragment : Fragment() {
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is ProjListRecyclerViewFragment.OnProjectClickListener) {
+            onProjectClickListener = context
+        } else {
+            throw RuntimeException("Must implement EditProjectListener")
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-         // this view model is shared among all fragments,
-        // so the owner needs to be activity.
-        // use requireActivity() to get the activity containing this fragment
-        val viewModel =
+
+        viewModel =
             ViewModelProvider(requireActivity()).get(CurProjectViewModel::class.java)
-        // this view model is only for this fragment, so owner is just "this"
-        val listViewModel =
+        listViewModel =
             ViewModelProvider(this).get(ProjectListViewModel::class.java)
-   //     val viewModel:CurProjectViewModel by activityViewModels()
+//        val viewModel:CurProjectViewModel by activityViewModels()
 //        val listViewModel: ProjectListViewModel by viewModels()
 
 
@@ -88,33 +85,72 @@ class ProjListRecyclerViewFragment : Fragment() {
                 else -> GridLayoutManager(context, columnCount)
             }
 
-             val myAdapter = MyProjListRecyclerViewAdapter(
-                listViewModel.projectList?.value ?: emptyList())
-                 { project ->
-                     viewModel.setCurProject(project)
-                     // this is only used when using sliding pane
-                     onProjectClickListener?.onProjectClick(project)
-
-                     // this is only used when not using sliding pane
-//                      if (!largeScreen) {
-//                            view.findNavController().navigate(
+              myAdapter = MyProjListRecyclerViewAdapter{ project->
+                        viewModel.setCurProject(project)
+                        // this is just for sliding pane
+                        onProjectClickListener?.onProjectClick(project)
+                        // will not perform the navigation from list fragment to detail fragment
+                        // on the large screen device.
+//                        if (!largeScreen) {
+//                            view.findNavController()?.navigate(
 //                                R.id.action_projListRecycleViewFragment_to_nav_graph
 //                            )
 //                       }
-                 }
+                      }
 
             this.adapter = myAdapter
 
+
             listViewModel.projectList.observe(viewLifecycleOwner, Observer {
-                myAdapter.notifyDataSetChanged()
+                myAdapter.replaceItems(it)
+                viewModel.initCurProject(myAdapter.getProject(0))
+
             })
 
             viewModel.curProject.observe(viewLifecycleOwner, Observer {
                 myAdapter.notifyDataSetChanged()
             })
 
+            ItemTouchHelper(SwipeToDeleteCallback()).attachToRecyclerView(this)
+
         }
     }
+
+    inner class SwipeToDeleteCallback: ItemTouchHelper.SimpleCallback(0,
+        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean = false
+
+        override fun getMovementFlags(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder
+        ) = makeMovementFlags(
+            ItemTouchHelper.ACTION_STATE_SWIPE,
+            ItemTouchHelper.RIGHT
+        )
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val position = viewHolder.bindingAdapterPosition
+            // get the project to be deleted
+            val project = myAdapter.getProject(position)
+            // delete the project and update curProject livedata in the viewmodel
+            // add your code here
+            if (viewModel.isCurProject(project)) {
+                if (position > 0)
+                    viewModel.setCurProject(myAdapter.getProject(position - 1))
+                else if (myAdapter.getItemCount() > 1 )
+                    viewModel.setCurProject(myAdapter.getProject(position + 1))
+                else
+                    viewModel.setCurProject(Project(0,"No more projects",""))
+
+            }
+            listViewModel.delProject(project)
+        }
+    }
+
 
     companion object {
 

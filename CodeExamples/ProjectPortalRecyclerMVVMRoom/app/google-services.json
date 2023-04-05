@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "378551002927",
+    "project_id": "cs683-projectportal",
+    "storage_bucket": "cs683-projectportal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378551002927:android:7e9b87471426badc1663da",
+        "android_client_info": {
+          "package_name": "edu.bu.projectportal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "378551002927-ape44m45540f75qq5r9fdni8895040ca.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAggXvWEvnNv3P_G3jRkdEh0kv-ULcaVrE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "378551002927-ape44m45540f75qq5r9fdni8895040ca.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

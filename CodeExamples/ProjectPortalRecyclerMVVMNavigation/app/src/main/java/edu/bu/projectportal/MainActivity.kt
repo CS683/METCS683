@@ -10,14 +10,14 @@ class MainActivity : AppCompatActivity(), ProjListRecyclerViewFragment.OnProject
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
-       // setContentView(R.layout.main_activity_slidepane)
+      //  setContentView(R.layout.main_activity)
+        setContentView(R.layout.main_activity_slidepane)
     }
 
     // this is only used for sliding pane
-//    override fun onBackPressed() {
-//        findViewById<SlidingPaneLayout>(R.id.slidepane).close()
-//    }
+    override fun onBackPressed() {
+        findViewById<SlidingPaneLayout>(R.id.slidepane).close()
+    }
 
     // this is only used for sliding pane
     override fun onProjectClick(project: Project){

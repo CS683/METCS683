@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ProjectPortal</string>
+    <string name="project_title">Project Title</string>
+    <string name="project_description">Project Description</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="access_time">accesstime</string>
+    <string name="last_access_time">lastaccesstime</string>
+    <string name="first_time_access">This is the first time that you open this app</string>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="edu.bu.projectportal">
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:name=".ProjectPortalApplication"
+        android:theme="@style/Theme.ProjectPortal">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name=".datalayer.ProjectPortalProvider"
+            android:authorities="edu.bu.projectportal.datalayer.ProjectPortalProvider"
+            android:exported= "true"
+            android:permission="edu.bu.projectportal.read">
+        </provider>
+
+<!--        <receiver android:name=".broadcastreceiver.MyBroadcastReciever"-->
+<!--            android:exported= "true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.BATTERY_CHANGED" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
+  </application>
+
+</manifest>
