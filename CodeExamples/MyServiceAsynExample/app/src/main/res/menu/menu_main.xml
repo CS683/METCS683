@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="edu.bu.myserviceasynexample.MainActivity">
+
+    <item android:id = "@+id/bgserv"
+        android:title="BG service" />
+    <item android:id = "@+id/bgservDfT"
+        android:title="BG service Diff Thread" />
+    <item android:id = "@+id/boundserv"
+        android:title="Bound service" />
+    <item android:id = "@+id/fgserv"
+        android:title="FG service" />
+    <item android:id = "@+id/stopFgserv"
+        android:title="Stop FG service" />
+    <item android:id = "@+id/jobscheduler"
+        android:title="Job Scheduler" />
+    <item android:id = "@+id/workManager"
+        android:title="Work Manager"/>
+
+</menu>
