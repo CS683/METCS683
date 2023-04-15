@@ -3,7 +3,7 @@
 - Learn how to use room database and repository
 - Learn how to use shared preferences
 ## Setup
-This week's code is posted on github: https://github.com/CS683/METCS683/tree/main/CodeExamples/ProjectPortalRecyclerMVVMNavRoom. To complete lab4, you will need to refer some files in the datalayer and videmodel package.  
+This week's code is posted on github: https://github.com/CS683/METCS683/tree/main/CodeExamples/ProjectPortalRecyclerMVVMRoom. To complete lab4, you will need to refer some files in the datalayer and videmodel package.  
 ## Description
 Based on the example we discuss in this module, add the following features into your previous lab3 submission:
 - Database Implementation
