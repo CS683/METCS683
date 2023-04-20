@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">GraphicExample</string>
+    <string name="backgdbutton">Want to change my background? Click the button below, which also enables the animation on the button</string>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/canvasLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="edu.bu.graphicexample.CanvasActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+                <Button
+                    android:id="@+id/drawOval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="draw an oval"
+                    android:onClick="drawOval"/>
+
+                <Button
+                    android:id="@+id/addCanvas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="add a canvas"
+                    android:onClick="addCanvas"/>
+
+                <Button
+                    android:id="@+id/clearCanvas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="clear"
+                    android:onClick="clearCanvas"/>
+
+        </LinearLayout>
+
+
+</LinearLayout>
