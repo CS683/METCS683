@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">ProjectPortal</string>
+    <string name="project_title">Project Title</string>
+    <string name="project_description">Project Description</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="access_time">accesstime</string>
+    <string name="last_access_time">lastaccesstime</string>
+    <string name="first_time_access">This is the first time that you open this app</string>
+    <string-array name="project_list">
+        <item>ProjectPortal</item>
+        <item>Weather Forecast</item>
+        <item>Connect Me</item>
+        <item>Whats Eat</item>
+    </string-array>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="sign_out">sign out</string>
+
+</resources>
