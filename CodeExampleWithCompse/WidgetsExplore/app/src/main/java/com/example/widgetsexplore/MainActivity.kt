@@ -1,16 +1,12 @@
 package com.example.widgetsexplore
 
 import android.os.Bundle
-import android.text.Layout
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -36,9 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -77,15 +71,13 @@ fun WidgetExplore(modifier: Modifier) {
     var profile = Profile()
 
     var name by remember { mutableStateOf("") }
-    var nameSubmission by remember { mutableStateOf("") }
     var country by remember { mutableStateOf("") }
-    var options = listOf("USA", "China", "Japan")
+    val options = listOf("USA", "China", "Japan")
 
     var comments by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
     var public by remember {mutableStateOf(false)}
     var adult by remember {mutableStateOf(true)}
-    var selected by remember {mutableStateOf("")}
     val radioOptions = listOf("Male", "Female")
     var (selectedOption, onOptionSelected) = remember { mutableStateOf("") }
     val scrollState = rememberScrollState()
@@ -146,9 +138,10 @@ fun WidgetExplore(modifier: Modifier) {
         }
 
         //Radiogroup Row
-        myRadioGroup(radioOptions, selectedOption, onOptionSelected,
+        MyRadioGroup(radioOptions, selectedOption, onOptionSelected,
             modifier = modifier)
 
+        // to-do: this doesn't work
         DropdownMenu(
             expanded = country.isNotEmpty(),
             onDismissRequest = { country = "" }) {
@@ -193,7 +186,7 @@ fun WidgetExplore(modifier: Modifier) {
 }
 
 @Composable
-fun myRadioGroup(
+fun MyRadioGroup(
     radioOptions: List<String>,
     selectedOption: String,
     setSelected: (selected: String) -> Unit,
@@ -221,7 +214,7 @@ fun myRadioGroup(
 
 @Preview(showBackground = true)
 @Composable
-fun widgetPreview() {
+fun WidgetPreview() {
     WidgetsExploreTheme {
         // A surface container using the 'background' color from the theme
         Surface(
