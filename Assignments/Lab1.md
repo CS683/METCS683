@@ -3,11 +3,11 @@
 ## Description
 
 In this lab, you will  
-- learn how to use Android studio to create a simple "hello world" Android application.
+- learn how to use Android studio to create a simple "hello android" Android application.
 - learn how to use git/github with Android studio
 - explore the lifecycle of an activity.
 
-You will need to create a simple "hello world" application using Android studio template, and modify the code to monitor the activity lifecycle, 
+You will need to create a simple "hello android" application using Android studio template, and modify the code to monitor the activity lifecycle, 
 and commit your code into your local repositoy and then push them to github. You need to add some log information using Log.d() in each of the 7 
 callback functions of the main activity.  You can find the detailed code in the lecture notes and at 
 https://github.com/PacktPublishing/How-to-Build-Android-Apps-with-Kotlin/tree/master/Chapter02/Exercise2.01. 
