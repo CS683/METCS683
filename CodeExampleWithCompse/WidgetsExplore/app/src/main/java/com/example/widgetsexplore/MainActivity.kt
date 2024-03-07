@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,8 +17,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
@@ -32,6 +36,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -64,6 +69,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WidgetExplore(modifier: Modifier) {
     val padding = 8.dp
@@ -71,8 +77,7 @@ fun WidgetExplore(modifier: Modifier) {
     var profile = Profile()
 
     var name by remember { mutableStateOf("") }
-    var country by remember { mutableStateOf("") }
-    val options = listOf("USA", "China", "Japan")
+    val countryOptions = listOf("USA", "China", "Japan")
 
     var comments by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
@@ -80,6 +85,8 @@ fun WidgetExplore(modifier: Modifier) {
     var adult by remember {mutableStateOf(true)}
     val radioOptions = listOf("Male", "Female")
     var (selectedOption, onOptionSelected) = remember { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
+    var selectedCountry by remember {mutableStateOf(countryOptions[0])}
     val scrollState = rememberScrollState()
 
     // make the Column layout scrollable through the modifier
@@ -105,6 +112,9 @@ fun WidgetExplore(modifier: Modifier) {
                     .clip(CircleShape)
             )
         }
+
+        Spacer(modifier = Modifier.size(16.dp))
+        Divider(modifier = modifier, thickness = 1.dp, color = Color.Black)
 
         TextField(
             value = name,
@@ -141,14 +151,31 @@ fun WidgetExplore(modifier: Modifier) {
         MyRadioGroup(radioOptions, selectedOption, onOptionSelected,
             modifier = modifier)
 
-        // to-do: this doesn't work
-        DropdownMenu(
-            expanded = country.isNotEmpty(),
-            onDismissRequest = { country = "" }) {
-            options.forEach { option ->
-                DropdownMenuItem(
-                    text = { Text(option) },
-                    onClick = { country = option })
+        // a drop-down menu for country
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded }) {
+            OutlinedTextField (
+                modifier = Modifier.fillMaxWidth().menuAnchor(),
+                readOnly = true,
+                value = selectedCountry,
+                onValueChange = {},
+                label = {Text("country")},
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(
+                        expanded = expanded)
+                }
+            )
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }) {
+                countryOptions.forEach { option ->
+                    DropdownMenuItem(
+                        text = { Text(option) },
+                        onClick = {
+                            selectedCountry = option
+                            expanded = false})
+                }
             }
         }
 
@@ -168,7 +195,7 @@ fun WidgetExplore(modifier: Modifier) {
                 message = " Your name is $name \n" +
                         ( if (adult) "you are 18 year olds." else "you are younger than 18 ") + "\n" +
                         (if (public) "your record is made public"  else "your info is private") + "\n" +
-                        "You are $selectedOption \n" + "Your comments: $comments"
+                        "You are a $selectedOption in $selectedCountry\n " + "Your comments: $comments"
                 name = ""
                 comments = ""
                 selectedOption = ""
