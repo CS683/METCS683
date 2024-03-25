@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".ProjectPortalApplication"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -15,7 +16,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.ProjectPortal">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
