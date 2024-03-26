@@ -1,37 +1,50 @@
 package edu.bu.metcs.projectportal.projects
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.bu.metcs.projectportal.data.Project
+import edu.bu.metcs.projectportal.data.ProjectRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 data class ProjectsUiState(
     val allProjects: List<Project> = emptyList(),
     val loading: Boolean = false
 )
-class ProjectsViewModel: ViewModel() {
+
+@HiltViewModel
+class ProjectsViewModel @Inject constructor (
+    private val projectRepository: ProjectRepository
+): ViewModel() {
     private val _uiState: MutableStateFlow<ProjectsUiState>
             = MutableStateFlow(ProjectsUiState())
 
-    val uiState: StateFlow<ProjectsUiState>
-        get() = _uiState
+    val uiState: StateFlow<ProjectsUiState> = _uiState.stateIn(
+        viewModelScope,
+        SharingStarted.Eagerly,
+        ProjectsUiState()
+    )
 
     init{
-        //_uiState.value = ProjectsUiState(Project.projects)
-        _uiState.update {
-            it.copy(allProjects = Project.projects.toList())
+
+        viewModelScope.launch {
+            projectRepository.getProjectsFlow().collect{projs ->
+                _uiState.update{
+                    it.copy(allProjects = projs)
+                }
+            }
         }
     }
 
     fun deleteProj(projId:String){
-
-        // to do: will be changed later to use a real data storage layer
-        val project: Project? = Project.projects.find{it.id == projId}
-        Project.projects.remove(project)
-
-        _uiState.update {
-            it.copy(allProjects = Project.projects.toList())
+        viewModelScope.launch {
+            projectRepository.deleteProject(projId)
         }
     }
 

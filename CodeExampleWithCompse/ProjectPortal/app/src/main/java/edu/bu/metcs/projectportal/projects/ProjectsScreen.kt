@@ -36,16 +36,15 @@ import edu.bu.metcs.projectportal.ui.theme.ProjectPortalTheme
 
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProjsScreen(
     onAddProj: () -> Unit,
     onSelectProj: (Project) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ProjectsViewModel = hiltViewModel(),
-  //  scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
     Scaffold (
-   //    scaffoldState = scaffoldState,
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text (stringResource(id = R.string.app_name))},
@@ -58,17 +57,18 @@ fun ProjsScreen(
                         )
                     }
                 }
-            ) },
+            )
+        },
         modifier = modifier
             .fillMaxWidth()
             .padding(dimensionResource(id = R.dimen.common_padding)),
         floatingActionButton = {
             FloatingActionButton(onClick = onAddProj) {
-                Icon(Icons.Filled.Add, "Add a New project")
+                Icon(Icons.Filled.Add, stringResource(id = R.string.add_project))
             }
         }
     ){
-        paddingValues ->
+            paddingValues ->
 
         // collect value emitted by uiState from the viewModel
         val uiState by viewModel.uiState.collectAsState()
@@ -78,7 +78,6 @@ fun ProjsScreen(
         ProjList(uiState.allProjects, onSelectProj,
             onDeleteProj = viewModel::deleteProj,
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(paddingValues))
     }
 }
@@ -91,17 +90,19 @@ fun ProjList (
     onDeleteProj: (String) -> Unit,
     modifier: Modifier
 )  {
-    Column(modifier = modifier,
+    Column(modifier = modifier
+        .fillMaxWidth()
+        .padding(horizontal = dimensionResource(id = R.dimen.common_padding))
     ){
-        Text(text = "CS683 Projects",
-            modifier = modifier
+        Text(text = stringResource(id = R.string.app_header),
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(dimensionResource(id = R.dimen.common_padding)),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge
         )
-        HorizontalDivider(modifier=Modifier.fillMaxWidth())
-        LazyColumn(modifier = modifier){
+        HorizontalDivider(modifier= Modifier)
+        LazyColumn{
             itemsIndexed(
                 items = projs,
                 key = { _, proj -> proj.id }
@@ -110,8 +111,7 @@ fun ProjList (
                     index,
                     proj = proj,
                     onClick = onSelectProj,
-                    onDelete = onDeleteProj,
-                    modifier = modifier)
+                    onDelete = onDeleteProj)
             }
         }
     }
@@ -123,12 +123,11 @@ fun ProjCard(
     proj: Project,
     onClick: (Project) -> Unit,
     onDelete: (String)-> Unit,
-    modifier: Modifier,
 ){
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
-           // .padding(dimensionResource(id = R.dimen.common_padding))
+            .padding(dimensionResource(id = R.dimen.common_padding))
     ) {
         Row(modifier = Modifier
             .fillMaxWidth()
@@ -140,13 +139,14 @@ fun ProjCard(
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.common_padding)))
             Spacer(modifier = Modifier.weight(1f))
             IconButton(
-              onClick = {onDelete(proj.id)}
+                onClick = {onDelete(proj.id)}
             ) {
-              Icon(Icons.Filled.Delete, "Delete the project")
-          }
+                Icon(Icons.Filled.Delete, stringResource(id = R.string.del_project))
+            }
         }
     }
 }
+
 
 
 @Preview(name = "List all Projects")
@@ -155,7 +155,11 @@ private fun ProjListPreview() {
     ProjectPortalTheme {
         Surface(modifier = Modifier.fillMaxWidth()) {
             ProjList(
-                projs = Project.projects,
+                projs = listOf(
+                    Project ("1", "weather forcast", "this app is ..."),
+                    Project ("2", "Project Portal", "this app is ..."),
+
+                    ),
                 onSelectProj = {},
                 onDeleteProj = {},
                 modifier = Modifier.fillMaxWidth())

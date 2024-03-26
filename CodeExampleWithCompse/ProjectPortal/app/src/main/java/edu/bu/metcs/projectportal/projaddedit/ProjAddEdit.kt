@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import edu.bu.metcs.projectportal.data.Project
 import edu.bu.metcs.projectportal.R
@@ -27,16 +28,13 @@ import edu.bu.metcs.projectportal.R
 fun ProjAddEdit(
     isAdd: Boolean,
     onAdd: (Project) -> Unit,
-    modifier: Modifier = Modifier,
     viewModel: ProjViewModel = hiltViewModel(),
 ){
 
     val uiState by viewModel.uiState.collectAsState()
 
-    val proj = uiState.project
-    var projTitle by remember {mutableStateOf(proj.title)}
-    var projDesp by remember{ mutableStateOf(proj.description)}
     var canEdit by remember{mutableStateOf(isAdd)}
+
 
     Column(
         modifier = Modifier
@@ -52,12 +50,12 @@ fun ProjAddEdit(
         Button(
             onClick = {
                 if (isAdd) {
-                    viewModel.addProject(projTitle, projDesp)
-                    onAdd(proj)
+                    viewModel.addProject(uiState.project.title, uiState.project.description)
+                    onAdd(uiState.project)
                 } else {
                     canEdit = !canEdit
                     if (!canEdit) {
-                        viewModel.updateProject(projTitle, projDesp)
+                        viewModel.updateProject(uiState.project.title, uiState.project.description)
                     }
                 }
             },
@@ -66,8 +64,8 @@ fun ProjAddEdit(
             Text(if(canEdit)  "submit" else "edit")
         }
         OutlinedTextField(
-            value = projTitle,
-            onValueChange = {projTitle = it},
+            value = uiState.project.title,
+            onValueChange = viewModel::updateTitle,
             modifier = Modifier.fillMaxWidth()
                 .padding(dimensionResource(R.dimen.common_padding)),
             textStyle = MaterialTheme.typography.titleLarge,
@@ -75,7 +73,7 @@ fun ProjAddEdit(
 
             placeholder = {
                 Text(
-                    text = "title",
+                    text = stringResource(id = R.string.title),
                 )
             },
             maxLines = 1,
@@ -85,14 +83,14 @@ fun ProjAddEdit(
         HorizontalDivider()
 
         OutlinedTextField(
-            value = projDesp,
-            onValueChange = {projDesp = it},
+            value = uiState.project.description,
+            onValueChange = viewModel::updateDesp,
             modifier = Modifier.fillMaxWidth()
                 .padding(dimensionResource(R.dimen.common_padding)),
             textStyle = MaterialTheme.typography.bodyMedium,
             placeholder = {
                 Text(
-                    text = "description",
+                    text = stringResource(R.string.description),
                 )
             },
             colors = textFieldColors,
