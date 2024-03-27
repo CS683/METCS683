@@ -69,10 +69,12 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
  //   implementation(libs.androidx.room.common)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.constraintlayout)
     ksp(libs.androidx.room.compiler)
     //implementation(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
 
+    implementation(libs.androidx.datastore.preferences)
 
     kapt(libs.hilt.compiler)
 
