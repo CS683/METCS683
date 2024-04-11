@@ -28,6 +28,7 @@ object ProjectPortalArgs {
 object ProjPortalDests {
     const val PROJECTS_ROUTE = "$PROJECTS_SCREEN"
     const val ADD_EDIT_PROJECT_ROUTE = "$ADD_EDIT_PROJECT_SCREEN/?{$PROJECT_ID_ARG}"
+    const val ABOUTUS_ROUTE = "AboutUS"
  // const val PROJECT_DETAIL_ROUTE = "$PROJECT_DETAIL_SCREEN/{$PROJECT_ID_ARG}"
 }
 
@@ -52,6 +53,9 @@ fun NavGraph(){
                 onSelectProj = {
                     navController.navigate("$ADD_EDIT_PROJECT_SCREEN/?${it.id}")
                 },
+                onAboutUS = {
+                    navController.navigate(ProjPortalDests.ABOUTUS_ROUTE)
+                }
             )
         }
         composable(
@@ -81,6 +85,10 @@ fun NavGraph(){
             else
                 ProjAddEdit(false, {})
         }
+        composable(route = ProjPortalDests.ABOUTUS_ROUTE) {
+            ContactUs()
+        }
     }
+
 }
 

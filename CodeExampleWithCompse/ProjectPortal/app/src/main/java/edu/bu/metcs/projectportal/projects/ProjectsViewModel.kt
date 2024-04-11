@@ -8,37 +8,68 @@ import edu.bu.metcs.projectportal.data.ProjectRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ProjectsUiState(
     val allProjects: List<Project> = emptyList(),
-    val loading: Boolean = false
+    val favorite: Boolean = false,
+    val searchWord: String = ""
 )
 
 @HiltViewModel
 class ProjectsViewModel @Inject constructor (
     private val projectRepository: ProjectRepository
 ): ViewModel() {
-    private val _uiState: MutableStateFlow<ProjectsUiState>
-            = MutableStateFlow(ProjectsUiState())
+    val uiState: StateFlow<ProjectsUiState>
+    val _isFavorite = MutableStateFlow(false)
 
-    val uiState: StateFlow<ProjectsUiState> = _uiState.stateIn(
-        viewModelScope,
-        SharingStarted.Eagerly,
-        ProjectsUiState()
-    )
+    //user List<Project> directly
+    val kotlinProjs: StateFlow<List<Project>>
+
+    val _searchResult:MutableStateFlow<List<Project>> = MutableStateFlow(emptyList())
+    val searchResult:StateFlow<List<Project>>
+        get() = _searchResult
 
     init{
+        // use combine to combine two flows into one
+        // it is better to use stateIn to convert the flow to a stateflow to provide to UI
+        // this provides lazy flow execution and automatic cancellation
+        uiState  = combine (
+            flow = projectRepository.getProjectsFlow(), flow2 = _isFavorite
+        ) {
+                projects, isFav ->
+            ProjectsUiState(allProjects = projects, favorite = isFav )
+        }.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            ProjectsUiState()
+        )
 
+        // if we just need the List<Project>, no need to wrap to ProjectsUiState
+
+        // Here we perform a query to find all projects with the title containing "kotlin"
+        // Since this is called in the init block. We can only call the query method
+        // with a known parameter
+        kotlinProjs = projectRepository.searchProjectsFlowByTitle("kotlin").stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            emptyList()
+        )
+    }
+
+
+    // This method is called to provide UI the search result when the user performs a search
+    // Since this method will be called many time, it should not call the dao method that
+    // returns a flow. Otherwise, every search will return a flow and UI may need to observe
+    // too many flow state, which may cause too many unnecessary re-composition
+    // Instead, we manually update the searchResult stateflow every time the user needs a new search
+    // This state value change will be observed by the UI composable.
+    fun updateSearchResult(projTitle:String){
         viewModelScope.launch {
-            projectRepository.getProjectsFlow().collect{projs ->
-                _uiState.update{
-                    it.copy(allProjects = projs)
-                }
-            }
+            _searchResult.value = projectRepository.searchProjectbyTitle(projTitle)
         }
     }
 

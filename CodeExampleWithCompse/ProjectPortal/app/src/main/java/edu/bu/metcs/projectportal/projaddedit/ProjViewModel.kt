@@ -1,6 +1,5 @@
 package edu.bu.metcs.projectportal.projaddedit
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -32,7 +31,7 @@ class ProjViewModel @Inject constructor (
     private val _uiState = MutableStateFlow(ProjUiState())
     val uiState: StateFlow<ProjUiState> = _uiState.stateIn(
         viewModelScope,
-        SharingStarted.Eagerly,
+        SharingStarted.WhileSubscribed(5000),
         ProjUiState()
     )
 
@@ -40,12 +39,10 @@ class ProjViewModel @Inject constructor (
     init {
         projId?.let {
             viewModelScope.launch {
-                projectRepository.searchProjectFlowbyId(projId).collect { proj ->
-                    proj?.let { p ->
-                        _uiState.update {
-                            it.copy(project = p)
-                        }
-                    }
+                 projectRepository.searchProjectbyId(projId)!!.let { proj ->
+                     _uiState.update {
+                         it.copy(project = proj)
+                     }
                 }
             }
         }

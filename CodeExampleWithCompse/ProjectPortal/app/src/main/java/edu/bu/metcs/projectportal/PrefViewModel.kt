@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.bu.metcs.projectportal.prefs.UserPreferences
 import edu.bu.metcs.projectportal.prefs.UserPreferencesRepository
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -18,21 +17,15 @@ class PrefViewModel @Inject constructor (
     private val userPrefRepository: UserPreferencesRepository,
 ): ViewModel(){
 
-    private val _uiState = MutableStateFlow(UserPreferences(""))
-    val uiState: StateFlow<UserPreferences> = _uiState.stateIn(
-        viewModelScope,
-        SharingStarted.Eagerly,
-        UserPreferences("")
-    )
+    val uiState: StateFlow<UserPreferences>
 
-    //initialize the project title and description as the one selected
     init {
-            viewModelScope.launch {
-                userPrefRepository.userPreferencesFlow.collect { userprf ->
-                    _uiState.value = userprf
-                }
-            }
-        }
+        uiState = userPrefRepository.userPreferencesFlow.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            UserPreferences("")
+        )
+    }
 
     fun updateAccessTime(accessTime: String) {
         viewModelScope.launch {

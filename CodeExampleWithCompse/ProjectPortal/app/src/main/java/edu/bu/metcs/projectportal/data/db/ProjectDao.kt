@@ -1,6 +1,9 @@
 package edu.bu.metcs.projectportal.data.db
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Query
+import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
 /*
@@ -29,8 +32,11 @@ interface ProjectDao {
     @Query("SELECT * FROM projects where id = :projId")
     suspend fun searchProjectById(projId: String): ProjectInLocalDB?
 
-    @Query("SELECT * FROM projects WHERE title like :projTitle ")
-    fun searchProjectsByTitle(projTitle:String): Flow<List<ProjectInLocalDB>>
+    @Query("SELECT * FROM projects WHERE title like '%' || :projTitle || '%' ")
+    fun searchProjectsFlowByTitle(projTitle:String): Flow<List<ProjectInLocalDB>>
+
+    @Query("SELECT * FROM projects WHERE title like '%' || :projTitle || '%' ")
+    fun searchProjectsByTitle(projTitle:String): List<ProjectInLocalDB>
 
     @Upsert
     suspend fun upsertProject(project: ProjectInLocalDB)

@@ -1,6 +1,8 @@
 package edu.bu.metcs.projectportal
 
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import edu.bu.metcs.projectportal.broadcastreceiver.MyBroadcastReciever
 import edu.bu.metcs.projectportal.prefs.UserPreferences
 import edu.bu.metcs.projectportal.prefs.UserPreferencesRepository
 import edu.bu.metcs.projectportal.prefs.loadAccessTime
@@ -24,6 +27,8 @@ import java.util.Date
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private lateinit var br: MyBroadcastReciever
 
     // create a datastore
  //   private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "prefs")
@@ -48,6 +53,17 @@ class MainActivity : ComponentActivity() {
 //        val accessTime =  loadAccessTime(this)
 //        Toast.makeText(this, accessTime, Toast.LENGTH_LONG).show()
 //        saveAccessTime(this)
+
+
+
+        //register a broadcast receiver
+        br= MyBroadcastReciever()
+        registerReceiver(br,
+            IntentFilter().apply{
+                addAction(Intent.ACTION_BATTERY_CHANGED)
+            })
+
+
     }
 }
 
@@ -80,3 +96,4 @@ fun AccessTimeText(userPreViewModel: PrefViewModel = hiltViewModel()){
     userPreViewModel.updateAccessTime(Date().toString())
 
 }
+

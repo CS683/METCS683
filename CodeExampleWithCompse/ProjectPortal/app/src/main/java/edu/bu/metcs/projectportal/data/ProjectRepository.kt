@@ -8,6 +8,12 @@ interface ProjectRepository {
 
     fun searchProjectFlowbyId(projId: String): Flow<Project?>
 
+    suspend fun searchProjectbyId(projId: String): Project?
+
+    fun searchProjectsFlowByTitle(projTitle: String): Flow<List<Project>>
+
+    suspend fun searchProjectbyTitle(projTitle: String): List<Project>
+
     suspend fun addProject(title: String, desc: String): String
     suspend fun editProject(id: String, title: String, desc: String)
 
