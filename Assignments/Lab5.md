@@ -1,6 +1,6 @@
 # Lab 5
 ## Description
-Based on your lab4 and the example we discuss in the class, implement the database operations in the Android coroutine. 
+Complete your previous labs if you didn't. 
 ## What to submit: 
 - On blackboard
   - A lab report fie in pdf or doc, including 

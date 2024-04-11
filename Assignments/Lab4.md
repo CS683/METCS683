@@ -11,7 +11,7 @@ Based on the example we discuss in this module, add the following features into 
 - Show Favorite Projects
   - Add a "show favorite projects only" checkbox (or toggle button or switch) on the project list screen.
   - This setting (whether it will show only favorite projects) should be stored into and received from the shared preferences or data store preferences so that it can be remembered across different sessions.
-  - If it is set, only list all favorite projects from the database. 
+  - If it is set, only list all favorite projects from the database. (optional) 
 ## What to submit: 
 - On blackboard
   - A lab report fie in pdf or doc, including 
