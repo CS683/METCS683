@@ -26,12 +26,16 @@ class ProjectsViewModel @Inject constructor (
     val uiState: StateFlow<ProjectsUiState>
     val _isFavorite = MutableStateFlow(false)
 
+    val keyWord = MutableStateFlow("")
+
     //user List<Project> directly
     val kotlinProjs: StateFlow<List<Project>>
 
     val _searchResult:MutableStateFlow<List<Project>> = MutableStateFlow(emptyList())
     val searchResult:StateFlow<List<Project>>
         get() = _searchResult
+
+    val filteredProjs: StateFlow<List<Project>>
 
     init{
         // use combine to combine two flows into one
@@ -58,6 +62,27 @@ class ProjectsViewModel @Inject constructor (
             SharingStarted.WhileSubscribed(5000),
             emptyList()
         )
+
+        // There are two ways to provide search results to the UI
+        // One is to perform a filter operation on the returned query for all projects
+        // this is preferred if a simple process is needed
+        // the other is to query the database with the search word
+
+        // instead of using database query, we apply a simple filter function
+        // for the search. When the search word changes, the value of filterProjs
+        // state flow will also be updated, and will trig the recomposition of the UI composable
+        filteredProjs = combine(
+            projectRepository.getProjectsFlow(),keyWord
+        ) {
+          projs, word ->
+            projs.filter{
+                it.title.contains(word)
+            }
+        }.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            emptyList()
+        )
     }
 
 
@@ -71,6 +96,10 @@ class ProjectsViewModel @Inject constructor (
         viewModelScope.launch {
             _searchResult.value = projectRepository.searchProjectbyTitle(projTitle)
         }
+    }
+
+    fun updateSearchWord(word: String){
+        keyWord.value = word
     }
 
     fun deleteProj(projId:String){

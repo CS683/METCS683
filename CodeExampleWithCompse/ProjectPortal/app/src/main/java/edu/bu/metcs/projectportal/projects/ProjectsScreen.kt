@@ -85,19 +85,27 @@ fun ProjsScreen(
 
             // collect value emitted by uiState from the viewModel
             val uiState by viewModel.uiState.collectAsState()
+
           //  val projs by viewModel.kotlinProjs.collectAsState()
-            val projs by viewModel.searchResult.collectAsState()
+         //   val projs by viewModel.searchResult.collectAsState()
+            val projs by viewModel.filteredProjs.collectAsState()
             var keywords by remember { mutableStateOf("") }
-            var value by remember { mutableStateOf("") }
+         //   var searchWord by remember { mutableStateOf("") }
+            // this state is also stored in the viewModel
+            val searchWord by viewModel.keyWord.collectAsState()
+
 
             Row {
 
                 TextField(
-                    value = value,
+                    value = searchWord,
                     onValueChange = {
-                        value = it
-                        // search whenever the input changes
-                        viewModel.updateSearchResult(value)
+                        // the change of searchWord will trigger the change of
+                        // filteredProjs stateflow value
+                        viewModel.updateSearchWord(it)
+
+                        // explicitly update the value of searchResult stateflow
+                       // viewModel.updateSearchResult(it)
                                     },
                    label = {Text("search")},
                     modifier = Modifier
@@ -105,7 +113,7 @@ fun ProjsScreen(
                 )
                  // Click search icon to search
 //                IconButton(onClick = {
-//                    keywords = value
+//                    keywords = searchWord
 //                    viewModel.updateSearchResult(keywords)
 //                }) {
 //                    Icon(
@@ -115,7 +123,7 @@ fun ProjsScreen(
 //                }
             }
 
-            if (value.isNotEmpty()) {
+            if (searchWord.isEmpty()) {
                 ProjList(
                     uiState.allProjects, onSelectProj,
                     onDeleteProj = viewModel::deleteProj,
