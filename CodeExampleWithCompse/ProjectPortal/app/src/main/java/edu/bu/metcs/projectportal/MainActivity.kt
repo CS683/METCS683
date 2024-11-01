@@ -27,7 +27,7 @@ import java.util.Date
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-   // private lateinit var br: MyBroadcastReciever
+    private lateinit var br: MyBroadcastReceiver
 
     // create a datastore
  //   private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "prefs")
@@ -55,14 +55,19 @@ class MainActivity : ComponentActivity() {
 
 
 
-//        //register a broadcast receiver
-//        br= MyBroadcastReciever()
-//        registerReceiver(br,
-//            IntentFilter().apply{
-//                addAction(Intent.ACTION_BATTERY_CHANGED)
-//            })
+        //register a broadcast receiver
+        br = MyBroadcastReceiver()
+        registerReceiver(br,
+            IntentFilter().apply{
+                addAction(Intent.ACTION_BATTERY_LOW)
+            })
 
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(br)
     }
 }
 

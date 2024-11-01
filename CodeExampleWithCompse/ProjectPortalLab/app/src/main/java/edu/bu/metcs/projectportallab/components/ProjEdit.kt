@@ -39,11 +39,11 @@ fun ProjEdit(){
     ){
         Button(
             onClick = {
-                canEdit = !canEdit
                 if (canEdit) {
                     Project.project.title = projTitle
                     Project.project.description = projDesp
                 }
+                canEdit = !canEdit
             },
             modifier = Modifier.align(Alignment.End)
         ){
