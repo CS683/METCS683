@@ -17,7 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import edu.bu.metcs.projectportal.broadcastreceiver.MyBroadcastReciever
 import edu.bu.metcs.projectportal.prefs.UserPreferences
 import edu.bu.metcs.projectportal.prefs.UserPreferencesRepository
 import edu.bu.metcs.projectportal.prefs.loadAccessTime
@@ -28,7 +27,7 @@ import java.util.Date
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private lateinit var br: MyBroadcastReciever
+   // private lateinit var br: MyBroadcastReciever
 
     // create a datastore
  //   private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "prefs")
@@ -56,12 +55,12 @@ class MainActivity : ComponentActivity() {
 
 
 
-        //register a broadcast receiver
-        br= MyBroadcastReciever()
-        registerReceiver(br,
-            IntentFilter().apply{
-                addAction(Intent.ACTION_BATTERY_CHANGED)
-            })
+//        //register a broadcast receiver
+//        br= MyBroadcastReciever()
+//        registerReceiver(br,
+//            IntentFilter().apply{
+//                addAction(Intent.ACTION_BATTERY_CHANGED)
+//            })
 
 
     }

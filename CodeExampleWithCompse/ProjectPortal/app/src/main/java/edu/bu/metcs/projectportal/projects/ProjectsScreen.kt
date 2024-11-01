@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -85,34 +86,32 @@ fun ProjsScreen(
 
             // collect value emitted by uiState from the viewModel
             val uiState by viewModel.uiState.collectAsState()
-          //  val projs by viewModel.kotlinProjs.collectAsState()
-            val projs by viewModel.searchResult.collectAsState()
             var keywords by remember { mutableStateOf("") }
             var value by remember { mutableStateOf("") }
 
-            Row {
+            // user this flow, then later call
+            // viewModel.updateSearchResult(value) when the keyword
+            // value changes
+            //  val projs by viewModel.searchResult.collectAsState()
 
+            // user this flow, then later call
+            // viewModel.updateSearchWord(value) when the keyword
+            // value changes
+            val projs by viewModel.filteredProjs.collectAsState()
+
+            Row {
                 TextField(
                     value = value,
                     onValueChange = {
                         value = it
                         // search whenever the input changes
-                        viewModel.updateSearchResult(value)
+                        // viewModel.updateSearchResult(value)
+                        viewModel.updateSearchWord(value)
                                     },
                    label = {Text("search")},
                     modifier = Modifier
                     .padding(dimensionResource(R.dimen.common_padding))
                 )
-                 // Click search icon to search
-//                IconButton(onClick = {
-//                    keywords = value
-//                    viewModel.updateSearchResult(keywords)
-//                }) {
-//                    Icon(
-//                        imageVector = Icons.Filled.Search,
-//                        contentDescription = "Search"
-//                    )
-//                }
             }
 
             if (value.isEmpty()) {

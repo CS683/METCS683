@@ -75,6 +75,7 @@ class ProjectsViewModel @Inject constructor (
             projectRepository.getProjectsFlow(),keyWord
         ) {
           projs, word ->
+            if (word.isEmpty()) projs else
             projs.filter{
                 it.title.contains(word)
             }

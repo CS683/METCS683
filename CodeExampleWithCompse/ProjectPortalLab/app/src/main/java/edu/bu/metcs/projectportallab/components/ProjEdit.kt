@@ -40,14 +40,14 @@ fun ProjEdit(){
         Button(
             onClick = {
                 canEdit = !canEdit
-                if (!canEdit) {
+                if (canEdit) {
                     Project.project.title = projTitle
                     Project.project.description = projDesp
                 }
             },
             modifier = Modifier.align(Alignment.End)
         ){
-            Text(if(canEdit)  "summit" else "edit",)
+            Text(if(canEdit)  "submit" else "edit",)
         }
 
         BasicTextField(
