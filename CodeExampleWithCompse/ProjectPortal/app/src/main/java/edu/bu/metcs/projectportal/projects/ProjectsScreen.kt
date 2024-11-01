@@ -115,7 +115,7 @@ fun ProjsScreen(
 //                }
             }
 
-            if (value.isNotEmpty()) {
+            if (value.isEmpty()) {
                 ProjList(
                     uiState.allProjects, onSelectProj,
                     onDeleteProj = viewModel::deleteProj,
