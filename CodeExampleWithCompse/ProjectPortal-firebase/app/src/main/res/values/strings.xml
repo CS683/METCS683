@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">ProjectPortal</string>
+
+    <string name="app_header">CS683 Projects</string>
+    <string name="title">Project Title</string>
+    <string name="description">Project Description</string>
+    <string name="add_project">Add a New Project</string>
+    <string name="del_project">Delete the New Project</string>
+
+    <string name="access_time">accesstime</string>
+    <string name="last_access_time">lastaccesstime</string>
+    <string name="first_time_access">This is the first time that you open this app</string>
+    <string name="email">Email</string>
+    <string name="pwd">Password</string>
+    <string name="pwdConfirm">Password Confirmation</string>
+</resources>
