@@ -31,7 +31,6 @@ fun ProjEdit(){
     var projDesp by remember{ mutableStateOf(Project.project.description)}
     var canEdit by remember{mutableStateOf(false)}
 
-
     Column(
         modifier = Modifier
             .padding(24.dp)
@@ -47,7 +46,7 @@ fun ProjEdit(){
             },
             modifier = Modifier.align(Alignment.End)
         ){
-            Text(if(canEdit)  "submit" else "edit",)
+            Text(if(canEdit)  "Submit" else "Edit")
         }
 
         BasicTextField(
@@ -71,9 +70,9 @@ fun ProjEdit(){
             modifier = Modifier.fillMaxWidth()
 
         )
-
     }
 }
+
 @Preview(name = "Project")
 @Composable
 private fun ProjEditPreview() {
