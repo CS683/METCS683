@@ -5,6 +5,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.bu.metcs.projectportal.prefs.UserPreferences
 import edu.bu.metcs.projectportal.prefs.UserPreferencesRepository
+import edu.bu.metcs.projectportal.prefs.loadAccessTimeFromDataStore
+import edu.bu.metcs.projectportal.prefs.saveAccessTime
+import edu.bu.metcs.projectportal.prefs.saveAccessTimetoDataStore
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn

@@ -1,6 +1,6 @@
 
 [versions]
-agp = "8.3.1"
+agp = "8.6.0"
 kotlin = "1.9.0"
 coreKtx = "1.12.0"
 junit = "4.13.2"
@@ -22,6 +22,11 @@ constraintlayout = "2.1.4"
 firebaseCommonKtx = "20.4.3"
 firebaseAuthKtx = "22.3.1"
 firebaseFirestoreKtx = "24.11.0"
+lifecycleRuntimeComposeAndroid = "2.8.7"
+
+locationservice = "21.0.1"
+mapscompose = "2.14.0"
+mapsservice = "18.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -54,10 +59,15 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 firebase-common-ktx = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebaseCommonKtx" }
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
+
+gms-playservices-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "locationservice"}
+androidx-maps-compose = {group = "com.google.maps.android", name = "maps-compose", version.ref = "mapscompose"}
+gms-playservices-maps = {group = "com.google.android.gms", name = "play-services-maps", version.ref = "mapsservice"}
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

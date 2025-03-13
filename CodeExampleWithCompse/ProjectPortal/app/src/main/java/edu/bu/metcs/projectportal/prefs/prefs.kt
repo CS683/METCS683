@@ -12,9 +12,8 @@ fun loadAccessTime(context: Context):String {
         Context.MODE_PRIVATE).getString(ACCESSTIMEKEY,"")?:""
 }
 // this is an example of writing data to shared preferences
-fun saveAccessTime(context:Context){
+fun saveAccessTime(context:Context, curTime: String){
     // get current time and write to the shared preferences file
-    val curTime: String = Date().toString()
     context.getSharedPreferences(ACCESSTIMEPREF,
         Context.MODE_PRIVATE).edit()
         .putString(ACCESSTIMEKEY, curTime).apply()

@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var summaryTV: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+            super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
 

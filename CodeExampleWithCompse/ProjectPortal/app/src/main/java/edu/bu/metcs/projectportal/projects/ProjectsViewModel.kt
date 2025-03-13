@@ -5,11 +5,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.bu.metcs.projectportal.data.Project
 import edu.bu.metcs.projectportal.data.ProjectRepository
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,11 +27,7 @@ class ProjectsViewModel @Inject constructor (
 ): ViewModel() {
     val uiState: StateFlow<ProjectsUiState>
     val _isFavorite = MutableStateFlow(false)
-
-    val keyWord = MutableStateFlow("")
-
-    //user List<Project> directly
-    val kotlinProjs: StateFlow<List<Project>>
+    val _keyWord = MutableStateFlow("")
 
     val _searchResult:MutableStateFlow<List<Project>> = MutableStateFlow(emptyList())
     val searchResult:StateFlow<List<Project>>
@@ -42,25 +40,18 @@ class ProjectsViewModel @Inject constructor (
         // it is better to use stateIn to convert the flow to a stateflow to provide to UI
         // this provides lazy flow execution and automatic cancellation
         uiState  = combine (
-            flow = projectRepository.getProjectsFlow(), flow2 = _isFavorite
+            flow = projectRepository.getProjectsFlow(),
+            flow2 = _isFavorite,
+            flow3 = _keyWord
         ) {
-                projects, isFav ->
-            ProjectsUiState(allProjects = projects, favorite = isFav )
+                projects, isFav, word ->
+            ProjectsUiState(allProjects = projects,
+                favorite = isFav,
+                searchWord = word)
         }.stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
             ProjectsUiState()
-        )
-
-        // if we just need the List<Project>, no need to wrap to ProjectsUiState
-
-        // Here we perform a query to find all projects with the title containing "kotlin"
-        // Since this is called in the init block. We can only call the query method
-        // with a known parameter
-        kotlinProjs = projectRepository.searchProjectsFlowByTitle("kotlin").stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000),
-            emptyList()
         )
 
         // There are two ways to provide search results to the UI
@@ -72,7 +63,7 @@ class ProjectsViewModel @Inject constructor (
         // for the search. When the search word changes, the value of filterProjs
         // state flow will also be updated, and will trig the recomposition of the UI composable
         filteredProjs = combine(
-            projectRepository.getProjectsFlow(),keyWord
+            projectRepository.getProjectsFlow(),_keyWord
         ) {
           projs, word ->
             if (word.isEmpty()) projs else
@@ -94,13 +85,16 @@ class ProjectsViewModel @Inject constructor (
     // Instead, we manually update the searchResult stateflow every time the user needs a new search
     // This state value change will be observed by the UI composable.
     fun updateSearchResult(projTitle:String){
+        val bj = viewModelScope.async {
+           projectRepository.searchProjectbyTitle(projTitle)
+        }
         viewModelScope.launch {
-            _searchResult.value = projectRepository.searchProjectbyTitle(projTitle)
+            _searchResult.update {bj.await()}
         }
     }
 
     fun updateSearchWord(word: String){
-        keyWord.value = word
+        _keyWord.update {word}
     }
 
     fun deleteProj(projId:String){

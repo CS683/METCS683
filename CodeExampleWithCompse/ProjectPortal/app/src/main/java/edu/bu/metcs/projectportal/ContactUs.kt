@@ -47,6 +47,7 @@ fun ContactUs() {
 
         Text ("1010 Commonwealth Ave, 3rd Floor")
         Spacer(modifier = Modifier.weight(1f))
+
     }
 }
 
@@ -101,9 +102,6 @@ fun CallUsIcon(context: Context, phoneNum: String) {
     }
 
 }
-
-
-
 
 
 

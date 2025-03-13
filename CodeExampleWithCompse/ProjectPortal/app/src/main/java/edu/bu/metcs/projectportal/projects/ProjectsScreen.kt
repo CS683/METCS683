@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -39,6 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import edu.bu.metcs.projectportal.R
 import edu.bu.metcs.projectportal.data.Project
 import edu.bu.metcs.projectportal.ui.theme.ProjectPortalTheme
@@ -53,11 +55,23 @@ fun ProjsScreen(
     modifier: Modifier = Modifier,
     viewModel: ProjectsViewModel = hiltViewModel(),
 ) {
+    var searchEnabled by remember { mutableStateOf(false) }
+
     Scaffold (
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(dimensionResource(id = R.dimen.common_padding)),
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text (stringResource(id = R.string.app_name))},
-                navigationIcon = {},
+                navigationIcon = {
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(
+                            imageVector = Icons.Filled.Menu,
+                            contentDescription = "menu"
+                        )
+                    }
+                },
                 actions = {
                     IconButton(onClick = { onAboutUS() }) {
                         Icon(
@@ -65,14 +79,16 @@ fun ProjsScreen(
                             contentDescription = "About US"
                         )
                     }
+                    IconButton(onClick = { searchEnabled = !searchEnabled }) {
+                        Icon(
+                            imageVector = Icons.Filled.Search,
+                            contentDescription = "Search"
+                        )
+                    }
                 }
-            )
-        },
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(dimensionResource(id = R.dimen.common_padding)),
-        floatingActionButton = {
-            FloatingActionButton(onClick = onAddProj) {
+            )},
+            floatingActionButton = {
+                FloatingActionButton(onClick = onAddProj) {
                 Icon(Icons.Filled.Add, stringResource(id = R.string.add_project))
             }
         }
@@ -85,9 +101,7 @@ fun ProjsScreen(
         ) {
 
             // collect value emitted by uiState from the viewModel
-            val uiState by viewModel.uiState.collectAsState()
-            var keywords by remember { mutableStateOf("") }
-            var value by remember { mutableStateOf("") }
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
             // user this flow, then later call
             // viewModel.updateSearchResult(value) when the keyword
@@ -97,37 +111,41 @@ fun ProjsScreen(
             // user this flow, then later call
             // viewModel.updateSearchWord(value) when the keyword
             // value changes
-            val projs by viewModel.filteredProjs.collectAsState()
+            val projs by viewModel.filteredProjs.collectAsStateWithLifecycle()
 
-            Row {
+            if (searchEnabled) {
                 TextField(
-                    value = value,
+                    leadingIcon = {
+                        Icon(
+                        imageVector = Icons.Filled.Search,
+                        contentDescription = "Search Icon")},
+                    value = uiState.searchWord,
                     onValueChange = {
-                        value = it
-                        // search whenever the input changes
-                        // viewModel.updateSearchResult(value)
-                        viewModel.updateSearchWord(value)
-                                    },
-                   label = {Text("search")},
-                    modifier = Modifier
+                        viewModel.updateSearchWord(it)
+                        //if using projs by viewModel.searchResult
+                        //viewModel.updateSearchResult(it)
+                        },
+                    placeholder = {Text("search")},
+                    modifier = Modifier.fillMaxWidth()
                     .padding(dimensionResource(R.dimen.common_padding))
                 )
             }
 
-            if (value.isEmpty()) {
-                ProjList(
-                    uiState.allProjects, onSelectProj,
-                    onDeleteProj = viewModel::deleteProj,
-                    modifier = Modifier
-                      //  .padding(paddingValues)
-                )
-            } else
+            if (searchEnabled && !uiState.searchWord.isEmpty()) {
                 ProjList(
                     projs, onSelectProj,
                     onDeleteProj = viewModel::deleteProj,
                     modifier = Modifier
-                     //   .padding(paddingValues)
+                    //   .padding(paddingValues)
                 )
+            } else
+                ProjList(
+                    uiState.allProjects, onSelectProj,
+                    onDeleteProj = viewModel::deleteProj,
+                    modifier = Modifier
+                    //  .padding(paddingValues)
+                )
+
         }
     }
 }

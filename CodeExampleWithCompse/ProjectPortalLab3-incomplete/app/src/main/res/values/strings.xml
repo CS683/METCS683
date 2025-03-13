@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ProjectPortal</string>
+    <string name="app_header">CS683 Projects</string>
+    <string name="title">Project Title</string>
+    <string name="description">Project Description</string>
+    <string name="add_project">Add a New Project</string>
+    <string name="del_project">Delete the New Project</string>
+    <string name="email">Email</string>
+    <string name="pwd">Password</string>
+
+
+</resources>

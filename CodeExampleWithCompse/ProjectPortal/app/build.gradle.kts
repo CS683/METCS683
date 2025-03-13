@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.kapt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
@@ -67,20 +66,21 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android.core)
     implementation(libs.androidx.hilt.navigation.compose)
- //   implementation(libs.androidx.room.common)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.common.ktx)
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose.android)
     ksp(libs.androidx.room.compiler)
-    //implementation(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
-
     implementation(libs.androidx.datastore.preferences)
+    ksp(libs.hilt.compiler)
 
-    kapt(libs.hilt.compiler)
-
+    // for google maps and location services
+//    implementation(libs.gms.playservices.location)
+//    implementation(libs.gms.playservices.maps)
+//    implementation(libs.androidx.maps.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

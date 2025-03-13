@@ -15,12 +15,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bu.metcs.projectportal.prefs.UserPreferences
 import edu.bu.metcs.projectportal.prefs.UserPreferencesRepository
 import edu.bu.metcs.projectportal.prefs.loadAccessTime
+import edu.bu.metcs.projectportal.prefs.loadAccessTimeFromDataStore
 import edu.bu.metcs.projectportal.prefs.saveAccessTime
+import edu.bu.metcs.projectportal.prefs.saveAccessTimetoDataStore
 import edu.bu.metcs.projectportal.ui.theme.ProjectPortalTheme
 import java.util.Date
 
@@ -29,9 +32,6 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var br: MyBroadcastReceiver
 
-    // create a datastore
- //   private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "prefs")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -39,19 +39,15 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize()) {
                     Column() {
-//                      AccessTimeText(context = LocalContext.current)
+                      AccessTimeText(context = LocalContext.current)
 //                      AccessTimeText(UserPreferencesRepository.getInstance(dataStore, LocalContext.current))
-                        AccessTimeText()
+ //                       AccessTimeText()
                         NavGraph()
 
                     }
                 }
             }
         }
-//        // read and write a shared preferences and dispaly it in a toast message
-//        val accessTime =  loadAccessTime(this)
-//        Toast.makeText(this, accessTime, Toast.LENGTH_LONG).show()
-//        saveAccessTime(this)
 
 
 
@@ -75,8 +71,18 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AccessTimeText(context:Context){
     val accessTime =  loadAccessTime(context)
-    Text (accessTime)
-    saveAccessTime(context)
+    Text ("Last accessed at $accessTime")
+    saveAccessTime(context, Date().toString())
+}
+
+@Composable
+fun AccessTimeTextFromDataStore(context:Context){
+    val accessTimeFlow =  loadAccessTimeFromDataStore(context)
+    val accessTime = accessTimeFlow.collectAsState(initial = "")
+    Text ("Last accessed at $accessTime")
+    LaunchedEffect(Unit) {
+        saveAccessTimetoDataStore(context, Date().toString())
+    }
 }
 
 //This composable gets data directly from data store repo

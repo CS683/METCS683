@@ -11,5 +11,4 @@ class MyBroadcastReceiver: BroadcastReceiver() {
             Log.d("Receiver", "Battery is low")
         }
     }
-
 }

@@ -28,21 +28,4 @@ class UserPreferencesRepository @Inject constructor (
             preferences[PreferencesKeys.SHOW_ACCESSTIME] = accessTime
         }
     }
-
-//    companion object {
-//        @Volatile
-//        private var INSTANCE: UserPreferencesRepository? = null
-//
-//        fun getInstance(dataStore: DataStore<Preferences>, context: Context): UserPreferencesRepository {
-//            return INSTANCE ?: synchronized(this) {
-//                INSTANCE?.let {
-//                    return it
-//                }
-//
-//                val instance = UserPreferencesRepository(dataStore, context)
-//                INSTANCE = instance
-//                instance
-//            }
-//        }
-//    }
 }
