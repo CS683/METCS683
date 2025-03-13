@@ -47,8 +47,6 @@ import com.example.widgetsexplore.ui.theme.WidgetsExploreTheme
 fun WidgetsExplore(modifier: Modifier) {
     val padding = 8.dp
 
-    var profile = Profile()
-
     var name by remember { mutableStateOf("") }
     val countryOptions = listOf("USA", "China", "Japan")
 
