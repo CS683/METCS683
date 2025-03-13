@@ -33,7 +33,7 @@ fun ProjDetail(
             onClick = onEdit,
             modifier = Modifier.align(Alignment.End)
         ){
-            Text( "edit")
+            Text( "Edit")
         }
 
         Text(
@@ -49,7 +49,7 @@ fun ProjDetail(
 
         Text (
             text = proj.description,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Left,
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -63,7 +63,7 @@ private fun ProjDetailPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            ProjDetail(Project("ProjectPortal", "ProjectPortal is ...."), {})
+            ProjDetail(Project.project,{})
         }
     }
 }

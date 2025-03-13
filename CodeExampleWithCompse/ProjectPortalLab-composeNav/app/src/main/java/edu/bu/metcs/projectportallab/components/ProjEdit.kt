@@ -51,7 +51,7 @@ fun ProjEdit(proj: Project,
             },
             modifier = Modifier.align(Alignment.End)
         ){
-            Text("summit" )
+            Text("Submit" )
         }
 
         OutlinedTextField(
@@ -60,24 +60,18 @@ fun ProjEdit(proj: Project,
             textStyle = MaterialTheme.typography.titleLarge,
             colors = textFieldColors,
             modifier = Modifier.fillMaxWidth()
-                .padding(dimensionResource(id = R.dimen.common_padding)),
-
+                .padding(dimensionResource(id = R.dimen.common_padding))
         )
 
         Divider(Modifier.fillMaxWidth().
         padding(dimensionResource(id = R.dimen.common_padding)))
-
-        //Spacer(Modifier.fillMaxWidth().size(32.dp))
 
         OutlinedTextField (
             value = projDesp,
             onValueChange = {projDesp = it},
             colors = textFieldColors,
             modifier = Modifier.fillMaxWidth()
-
-
-        )
-
+       )
     }
 }
 @Preview(name = "ProjectEdit")
@@ -88,7 +82,7 @@ private fun ProjEditPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            ProjEdit(Project("ProjectPortal", "ProjectPortal is ...."), {})
+            ProjEdit(Project.project, {})
         }
     }
 }
