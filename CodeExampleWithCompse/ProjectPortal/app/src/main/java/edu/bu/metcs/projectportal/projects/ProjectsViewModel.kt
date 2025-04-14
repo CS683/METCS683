@@ -6,10 +6,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.bu.metcs.projectportal.data.Project
 import edu.bu.metcs.projectportal.data.ProjectRepository
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -20,7 +23,7 @@ data class ProjectsUiState(
     val favorite: Boolean = false,
     val searchWord: String = ""
 )
-
+@OptIn(kotlinx. coroutines. ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class ProjectsViewModel @Inject constructor (
     private val projectRepository: ProjectRepository
@@ -35,19 +38,20 @@ class ProjectsViewModel @Inject constructor (
 
     val filteredProjs: StateFlow<List<Project>>
 
-    init{
+    init {
         // use combine to combine two flows into one
         // it is better to use stateIn to convert the flow to a stateflow to provide to UI
         // this provides lazy flow execution and automatic cancellation
-        uiState  = combine (
+        uiState = combine(
             flow = projectRepository.getProjectsFlow(),
             flow2 = _isFavorite,
             flow3 = _keyWord
-        ) {
-                projects, isFav, word ->
-            ProjectsUiState(allProjects = projects,
+        ) { projects, isFav, word ->
+            ProjectsUiState(
+                allProjects = projects,
                 favorite = isFav,
-                searchWord = word)
+                searchWord = word
+            )
         }.stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
@@ -62,36 +66,35 @@ class ProjectsViewModel @Inject constructor (
         // instead of using database query, we apply a simple filter function
         // for the search. When the search word changes, the value of filterProjs
         // state flow will also be updated, and will trig the recomposition of the UI composable
-        filteredProjs = combine(
-            projectRepository.getProjectsFlow(),_keyWord
-        ) {
-          projs, word ->
-            if (word.isEmpty()) projs else
-            projs.filter{
-                it.title.contains(word)
-            }
-        }.stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000),
-            emptyList()
-        )
+//        filteredProjs = combine(
+//            projectRepository.getProjectsFlow(), _keyWord
+//        ) { projs, word ->
+//            if (word.isEmpty()) projs else
+//                projs.filter {
+//                    it.title.contains(word)
+//                }
+//        }.stateIn(
+//            viewModelScope,
+//            SharingStarted.WhileSubscribed(5000),
+//            emptyList()
+//        )
+
+        // the other way is to query the database with the search word
+        filteredProjs = _keyWord
+          //  .debounce(300)
+            .flatMapLatest {
+                (if (it.isEmpty())
+                    projectRepository.getProjectsFlow()
+                else
+                    projectRepository.searchProjectsFlowByTitle(it))
+            }.stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5000),
+                emptyList()
+            )
     }
 
 
-    // This method is called to provide UI the search result when the user performs a search
-    // Since this method will be called many time, it should not call the dao method that
-    // returns a flow. Otherwise, every search will return a flow and UI may need to observe
-    // too many flow state, which may cause too many unnecessary re-composition
-    // Instead, we manually update the searchResult stateflow every time the user needs a new search
-    // This state value change will be observed by the UI composable.
-    fun updateSearchResult(projTitle:String){
-        val bj = viewModelScope.async {
-           projectRepository.searchProjectbyTitle(projTitle)
-        }
-        viewModelScope.launch {
-            _searchResult.update {bj.await()}
-        }
-    }
 
     fun updateSearchWord(word: String){
         _keyWord.update {word}
