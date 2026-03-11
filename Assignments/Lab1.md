@@ -30,6 +30,7 @@ and any screenshots to show as evidences of your findings.
     |close the app|...|
     |press the home button| ...|
     |...|...|
+  - A clear description of all functionalities your dice rolling app has and the screenshots of its execution results. 
   - The AI usage log includes prompt history and a reflection that evaluates the AI's utlity, the correctness of its output and overall quality of the generated code.
 - A short video to explain AI-generated code to show your basic understanding 
 
