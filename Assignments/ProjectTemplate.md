@@ -83,11 +83,12 @@ In later iterations, this section should be updated to provide detailed explanat
 |3| | | | |
 
 ## AI Usage Log
-|Tool | Tasks | Evaulation| Links or Prompt History|
-|---|---|---|---|---|
-|| | | | |
-|| | | | |
-|| | | | |
+
+|Tool | Task | Evaulation| Links or Prompt History|
+|---|---|---|---|
+|| | | |
+|| | | |
+|| | | |
 ## Future Work (Optional)
 *(This section can describe possible future works. Particularly the requirements you planned but didn’t get time to implement, and possible Android components or features to implement them. 
 This section is optional, and you can include this section in the final iteration if you want.)*
