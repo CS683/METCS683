@@ -8,8 +8,7 @@ In this lab, you will  
 - explore the lifecycle of an activity.
 - learn how to effectively prompt AI to generate code and evaluate AI-generated code  
  
-The first task is to create a simple "hello android" application using Android studio template, and modify the code to monitor the activity lifecycle. You need to add some log information using Log.d() in each callback function of the main activity.  You can find the detailed code in the lecture notes and at 
-https://github.com/PacktPublishing/How-to-Build-Android-Apps-with-Kotlin/tree/master/Chapter02/Exercise2.01. 
+The first task is to create a simple "hello android" application using Android studio template, and modify the code to monitor the activity lifecycle. You need to add some log information using Log.d() in each callback function of the main activity.  You can find the detailed code in the lecture notes. 
 Explore when these methods will be called by performing different actions such as starting the app, closing the app, 
 starting another app, pressing the back button, bringing the app from the background, rotating the screen, etc. 
 Document your findings in your lab report.
