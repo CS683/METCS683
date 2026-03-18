@@ -9,6 +9,7 @@ import edu.bu.metcs.projectportal.data.ProjectRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -27,13 +28,8 @@ class ProjViewModel @Inject constructor (
 ): ViewModel() {
 
     private val projId: String? = savedStateHandle["projId"]
-
     private val _uiState = MutableStateFlow(ProjUiState())
-    val uiState: StateFlow<ProjUiState> = _uiState.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5000),
-        ProjUiState()
-    )
+    val uiState: StateFlow<ProjUiState> = _uiState
 
     //initialize the project title and description as the one selected
     init {
@@ -47,6 +43,18 @@ class ProjViewModel @Inject constructor (
             }
         }
     }
+//    init{
+//        uiState  =
+//           projectRepository.searchProjectFlowbyId(projId!!).map { proj ->
+//               if (proj != null) ProjUiState (proj)
+//               else ProjUiState()
+//           }.stateIn(
+//            viewModelScope,
+//            SharingStarted.WhileSubscribed(5000),
+//            ProjUiState()
+//        )
+//    }
+
 
     fun addProject(title:String, desp: String) {
         // update data source

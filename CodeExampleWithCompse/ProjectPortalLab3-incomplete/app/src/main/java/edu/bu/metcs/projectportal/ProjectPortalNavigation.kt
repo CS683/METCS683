@@ -50,8 +50,8 @@ fun NavGraph(){
                     navController.navigate("$ADD_EDIT_PROJECT_SCREEN/")
                 },
                 onSelectProj = {proj->
-                 //   navController.navigate("$ADD_EDIT_PROJECT_SCREEN/?${proj.id}")
-                    navController.navigate("addEitProject/?${proj.id}")
+                    navController.navigate("$ADD_EDIT_PROJECT_SCREEN/?${proj.id}")
+                  //  navController.navigate("addEitProject/?${proj.id}")
                 },
             )
         }

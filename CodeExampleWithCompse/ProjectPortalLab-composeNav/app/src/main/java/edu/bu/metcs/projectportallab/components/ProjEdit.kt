@@ -56,6 +56,7 @@ fun ProjEdit(proj: Project,
 
         OutlinedTextField(
             value = projTitle,
+            label = {Text("Title")},
             onValueChange = {projTitle = it},
             textStyle = MaterialTheme.typography.titleLarge,
             colors = textFieldColors,

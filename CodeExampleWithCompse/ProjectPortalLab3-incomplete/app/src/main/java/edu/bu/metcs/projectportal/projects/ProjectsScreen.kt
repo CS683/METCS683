@@ -34,8 +34,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import edu.bu.metcs.projectportal.R
 import edu.bu.metcs.projectportal.ui.theme.ProjectPortalTheme
 
-
-
 @Composable
 fun ProjsScreen(
     onAddProj: () -> Unit,

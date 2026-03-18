@@ -74,10 +74,11 @@ fun GraphicsExample(
         }
         .drawWithContent {
             drawContent()
+
             // draws a fully black area with a small keyhole at pointerOffset that’ll show part of the UI.
             drawRect(
                 Brush.radialGradient(
-                    listOf(Color.Blue, Color.Transparent),
+                    listOf( Color.Transparent, Color.Blue,),
                     center = pointerOffset,
                     radius = 20.dp.toPx(),
                 ),
@@ -118,8 +119,8 @@ fun GraphicsExample(
             contentAlignment = Alignment.Center
         ) {
             Image(
-                     painter = painterResource(id = R.drawable.welcome),
-                    contentDescription = "Welcome"
+                painter = painterResource(id = R.drawable.welcome),
+                contentDescription = "Welcome"
                 )
             IconButton(
                 onClick = onNext,

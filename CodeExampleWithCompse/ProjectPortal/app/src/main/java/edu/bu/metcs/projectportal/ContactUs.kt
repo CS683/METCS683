@@ -74,6 +74,8 @@ fun CallUsIcon(context: Context, phoneNum: String) {
                     Intent.ACTION_CALL,
                     Uri.parse("tel: $phoneNum"))
             )
+        } else {
+
         }
     }
 

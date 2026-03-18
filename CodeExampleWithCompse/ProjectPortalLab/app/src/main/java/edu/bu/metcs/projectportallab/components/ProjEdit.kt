@@ -76,7 +76,7 @@ fun ProjEdit(){
 @Preview(name = "Project")
 @Composable
 private fun ProjEditPreview() {
-    ProjectPortalLabTheme {
+
         ProjEdit()
-    }
+
 }

@@ -91,7 +91,9 @@ fun WidgetsExplore(modifier: Modifier) {
 
         TextField(
             value = name,
-            onValueChange = { name = it },
+            onValueChange = {
+                name = it
+                            },
             label = { Text("Name") },
             modifier = modifier
         )

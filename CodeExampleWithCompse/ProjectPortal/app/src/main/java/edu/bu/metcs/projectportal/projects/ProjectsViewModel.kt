@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.bu.metcs.projectportal.data.Project
 import edu.bu.metcs.projectportal.data.ProjectRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -52,7 +54,8 @@ class ProjectsViewModel @Inject constructor (
                 favorite = isFav,
                 searchWord = word
             )
-        }.stateIn(
+        }.flowOn(Dispatchers.IO)
+            .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
             ProjectsUiState()
@@ -101,7 +104,7 @@ class ProjectsViewModel @Inject constructor (
     }
 
     fun deleteProj(projId:String){
-        viewModelScope.launch {
+        viewModelScope.launch (Dispatchers.IO) {
             projectRepository.deleteProject(projId)
         }
     }
