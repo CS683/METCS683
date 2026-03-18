@@ -15,9 +15,9 @@ In this lab, we wiill need to make the following changes based on the Projectpor
 ## What to submit: 
 - On blackboard
   - A lab report fie in pdf or doc, including 
-   - your github repo URL link
-   - a description of how you designed and implemented the above requirements. Please also report any issues you have encountered and the screenshots to show the execution result. *Please specify what device or virtual device you used to execute your program.*
-   - AI usage log
+    - your github repo URL link
+    - a description of how you designed and implemented the above requirements. Please also report any issues you have encountered and the screenshots to show the execution result. *Please specify what device or virtual device you used to execute your program.*
+    - AI usage log
   - A zip file of your source code
   - A short video to explain your code
 - On github
