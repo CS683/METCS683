@@ -26,13 +26,13 @@ import edu.bu.metcs.projectportallab.Project
 import edu.bu.metcs.projectportallab.ui.theme.ProjectPortalLabTheme
 
 @Composable
-fun ProjEdit(){
+fun ProjEdit(modifier: Modifier = Modifier){
     var projTitle by remember {mutableStateOf(Project.project.title)}
     var projDesp by remember{ mutableStateOf(Project.project.description)}
     var canEdit by remember{mutableStateOf(false)}
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .padding(24.dp)
             .fillMaxWidth(),
     ){
@@ -76,7 +76,5 @@ fun ProjEdit(){
 @Preview(name = "Project")
 @Composable
 private fun ProjEditPreview() {
-
         ProjEdit()
-
 }

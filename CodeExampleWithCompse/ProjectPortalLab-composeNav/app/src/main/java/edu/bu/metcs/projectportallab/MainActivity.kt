@@ -1,10 +1,14 @@
 package edu.bu.metcs.projectportallab
 
+import android.icu.number.Scale
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,14 +22,14 @@ import edu.bu.metcs.projectportallab.ui.theme.ProjectPortalLabTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
             ProjectPortalLabTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
+                Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    NavGraph()
+                    containerColor = MaterialTheme.colorScheme.background
+                ) {innerPadding ->
+                    NavGraph(modifier = Modifier.padding(paddingValues = innerPadding))
                 }
             }
         }
@@ -33,26 +37,29 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun NavGraph() {
+fun NavGraph(modifier : Modifier = Modifier) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = ProjectPortalDests.PROJ_DETAIL_ROUTE) {
-        composable(route = "ProjectDetail") {
+        composable(route = ProjectPortalDests.PROJ_DETAIL_ROUTE) {
             ProjDetail(Project.project,
                 onEdit = {
-                navController.navigate(ProjectPortalDests.PROJECT_EDIT_ROUTE)
-            })
+                navController.navigate(ProjectPortalDests.PROJ_EDIT_ROUTE)
+            },
+                modifier = modifier)
         }
-        composable(route = "ProjectEdit") {
-            ProjEdit(Project.project, onEditDone = {
+        composable(route = ProjectPortalDests.PROJ_EDIT_ROUTE) {
+            ProjEdit(Project.project,
+                onEditDone = {
                 navController.navigate(ProjectPortalDests.PROJ_DETAIL_ROUTE)
-            })
+            },
+                modifier = modifier)
         }
     }
 }
 
 object ProjectPortalDests {
     const val PROJ_DETAIL_ROUTE = "ProjectDetail"
-    const val PROJECT_EDIT_ROUTE = "ProjectEdit"
+    const val PROJ_EDIT_ROUTE = "ProjectEdit"
 }
 
 

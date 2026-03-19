@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import edu.bu.metcs.projectportallab.Project
 import edu.bu.metcs.projectportallab.R
 import edu.bu.metcs.projectportallab.ui.theme.ProjectPortalLabTheme
@@ -22,11 +23,12 @@ import edu.bu.metcs.projectportallab.ui.theme.ProjectPortalLabTheme
 @Composable
 fun ProjDetail(
     proj: Project,
-    onEdit:()->Unit ) {
+    onEdit:()->Unit,
+    modifier: Modifier = Modifier) {
 
     Column(
-        modifier = Modifier
-            .padding(dimensionResource(id = R.dimen.common_padding))
+        modifier = modifier
+            .padding(24.dp)
             .fillMaxWidth(),
     ){
         Button(

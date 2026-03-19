@@ -106,7 +106,8 @@ fun WidgetsExplore(modifier: Modifier) {
             Checkbox(
                 modifier = Modifier.padding(end = padding),
                 checked = adult,
-                onCheckedChange = { adult = it })
+                onCheckedChange = {
+                    adult = it })
             Text(
                 "18 years old",
                 fontSize = 18.sp

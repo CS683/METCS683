@@ -22,19 +22,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import edu.bu.metcs.projectportallab.Project
 import edu.bu.metcs.projectportallab.R
 import edu.bu.metcs.projectportallab.ui.theme.ProjectPortalLabTheme
 
 @Composable
 fun ProjEdit(proj: Project,
-             onEditDone:()->Unit){
+             onEditDone:()->Unit,
+             modifier: Modifier = Modifier){
     var projTitle by remember {mutableStateOf(proj.title)}
     var projDesp by remember{ mutableStateOf(proj.description)}
 
     Column(
-        modifier = Modifier
-            .padding(dimensionResource(id = R.dimen.common_padding))
+        modifier = modifier
+            .padding(24.dp)
             .fillMaxWidth(),
     ){
         val textFieldColors = OutlinedTextFieldDefaults.colors(
