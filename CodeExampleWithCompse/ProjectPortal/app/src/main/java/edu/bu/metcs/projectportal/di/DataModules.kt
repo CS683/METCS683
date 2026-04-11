@@ -7,7 +7,6 @@ import androidx.datastore.preferences.SharedPreferencesMigration
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import dagger.Binds
@@ -28,7 +27,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
-
     @Singleton
     @Binds
     abstract fun bindProjectRepository(repository: LocalProjectRepository): ProjectRepository

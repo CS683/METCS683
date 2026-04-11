@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.kapt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
@@ -43,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
     packaging {
         resources {
@@ -69,7 +68,7 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android.core)
     implementation(libs.androidx.hilt.navigation.compose)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -78,6 +77,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-
 }

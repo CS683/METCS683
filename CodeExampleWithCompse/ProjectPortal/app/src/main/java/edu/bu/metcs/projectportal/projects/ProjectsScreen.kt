@@ -120,11 +120,9 @@ fun ProjsScreen(
                         imageVector = Icons.Filled.Search,
                         contentDescription = "Search Icon")},
                     value = uiState.searchWord,
-                    onValueChange = {
-                        viewModel.updateSearchWord(it)
+                    onValueChange = viewModel::updateSearchWord,
                         //if using projs by viewModel.searchResult
-                        //viewModel.updateSearchResult(it)
-                        },
+                        //viewModel::updateSearchResult()
                     placeholder = {Text("search")},
                     modifier = Modifier.fillMaxWidth()
                     .padding(dimensionResource(R.dimen.common_padding))

@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.kapt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.googleservice)
@@ -71,7 +70,7 @@ dependencies {
     implementation(libs.hilt.android.core)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     // room
     implementation(libs.androidx.room.ktx)

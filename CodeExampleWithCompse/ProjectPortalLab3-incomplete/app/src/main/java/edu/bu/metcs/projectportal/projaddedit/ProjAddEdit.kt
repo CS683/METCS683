@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import edu.bu.metcs.projectportal.data.Project
 import edu.bu.metcs.projectportal.R
 
@@ -31,8 +33,8 @@ fun ProjAddEdit(
     viewModel: ProjViewModel = hiltViewModel(),
 ){
 
-    val uiState by viewModel.uiStateFlow.collectAsState()
-    var canEdit by remember{mutableStateOf(isAdd)}
+    val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
+    var canEdit by rememberSaveable {mutableStateOf(isAdd)}
 
     Column(
         modifier = Modifier
@@ -59,7 +61,7 @@ fun ProjAddEdit(
         }
         OutlinedTextField(
             value = uiState.title,
-            onValueChange = viewModel::updateTitle,
+            onValueChange =  viewModel::updateTitle,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(dimensionResource(R.dimen.common_padding)),

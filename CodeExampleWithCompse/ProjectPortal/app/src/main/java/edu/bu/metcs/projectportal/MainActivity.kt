@@ -16,7 +16,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.datastore.dataStore
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bu.metcs.projectportal.prefs.UserPreferences
 import edu.bu.metcs.projectportal.prefs.UserPreferencesRepository
@@ -39,9 +41,8 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize()) {
                     Column() {
-                      AccessTimeText(context = LocalContext.current)
-//                      AccessTimeText(UserPreferencesRepository.getInstance(dataStore, LocalContext.current))
- //                       AccessTimeText()
+ //                     AccessTimeText(context = LocalContext.current)
+                     AccessTimeText()
                         NavGraph()
 
                     }
@@ -89,7 +90,7 @@ fun AccessTimeTextFromDataStore(context:Context){
 @Composable
 fun AccessTimeText(userPrefRepo: UserPreferencesRepository){
     val userPreferencesFlow = userPrefRepo.userPreferencesFlow
-    val uiState by userPreferencesFlow.collectAsState(UserPreferences(""))
+    val uiState by userPreferencesFlow.collectAsStateWithLifecycle(UserPreferences(""))
 
     Text ("Last accessed at ${uiState.accessTime}")
     LaunchedEffect(Unit){
@@ -100,7 +101,7 @@ fun AccessTimeText(userPrefRepo: UserPreferencesRepository){
 //This composable gets data directly from data store repo and use hilt for datastore construction
 @Composable
 fun AccessTimeText(userPreViewModel: PrefViewModel = hiltViewModel()){
-    val uiState by userPreViewModel.uiState.collectAsState()
+    val uiState by userPreViewModel.uiState.collectAsStateWithLifecycle()
 
     Text ("Last accessed at ${uiState.accessTime}")
     userPreViewModel.updateAccessTime(Date().toString())

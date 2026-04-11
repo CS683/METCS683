@@ -31,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import edu.bu.metcs.projectportal.R
 import edu.bu.metcs.projectportal.ui.theme.ProjectPortalTheme
 
@@ -66,7 +67,7 @@ fun ProjsScreen(
         paddingValues ->
 
             // collect value emitted by uiState from the viewModel
-            val uiState by viewModel.uiStateFlow.collectAsState()
+            val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
             // whenever the uiState value changes, the ProjList
             // will recompose.
