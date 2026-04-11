@@ -20,6 +20,7 @@ Based on either one of the two examples mentioned above, add the following featu
    - your github repo URL link
    - a description of how you designed and implemented the above requirements. Please also report any issues you have encountered and the screenshots to show the execution result.
   - A zip file of your source code
+  - A short video to explain your code and show the code execution or the app test. 
 - On github
   - Commit both your lab report (in pdf, doc or md) and code
 
