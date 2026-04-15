@@ -38,7 +38,7 @@ fun NavGraph(){
    val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "home"){
         composable("home") {
-            GraphicsExample {
+            GraphicsScreen{
                 navController.navigate("next")
             }
         }
@@ -54,6 +54,6 @@ fun NavGraph(){
 @Composable
 fun GreetingPreview() {
     GraphicsExampleTheme {
-        GraphicsExample{}
+     //   GraphicsExample{}
     }
 }
